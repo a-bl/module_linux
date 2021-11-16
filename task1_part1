@@ -1,0 +1,6 @@
+## 1. Log in to the system as root. ##
+
+To log in as root, enter the following command in the terminal:
+  sudo su
+ 
+
