@@ -37,15 +37,15 @@ then
         echo 'Expecting apache log file as an argument'
 else
 	echo '1. From which ip were the most requests?'
-	most_requested_ip() $1
+	most_requested_ip $1
 	echo '2. What is the most requested page?'
-	most_popular_page() $1
+	most_popular_page $1
 	echo '3. How many requests were there from each ip?'
-	request_per_ip() $1
+	request_per_ip $1
 	echo '4. What non-existent pages were clients reffered to?'
-	non_existent_pages() $1
+	non_existent_pages $1
 	echo '5. What time did site get the most requests?'
-	most_requested() $1
+	most_requested $1
 	echo '6. What search bots have accessed the site? (UA + IP)'
-	search_bots() $1
+	search_bots $1
 fi
