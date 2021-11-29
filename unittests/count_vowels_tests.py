@@ -9,8 +9,7 @@ class VowelsTests(unittest.TestCase):
         self.assertEqual(count_vowels.get_res('I am studying Python'), 5)
 
     def test_not_string(self):
-        self.assertEqual(count_vowels.get_res("WinPython Control Panel"), 6)
-        with self.assertRaises(AttributeError):
+         with self.assertRaises(AttributeError):
             count_vowels.get_res(2)
 
 
