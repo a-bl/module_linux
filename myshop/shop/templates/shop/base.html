@@ -10,7 +10,6 @@
 <div id="header">
     <a href="/" class="logo">My shop</a>
 </div>
-
 <div id="subheader">
     <div class="cart">
         {% with total_items=cart|length %}
@@ -26,6 +25,22 @@
         {% endwith %}
     </div>
 </div>
+
+<div id="subheader">
+    <div class="wishlist">
+        {% with total_items=wishlist|length %}
+            {% if wishlist|length > 0 %}
+                Your wishlist:
+                <a href="{% url "accounts:wishlist" %}">
+                    {{ total_items }} item{{ total_items|pluralize }}
+                </a>
+            {% else %}
+                Your wishlist is empty.
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
 <div id="content">
     {% block content %}
     {% endblock %}

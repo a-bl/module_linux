@@ -29,3 +29,4 @@ def product_detail(request, id, slug):
                    }
                   )
 
+

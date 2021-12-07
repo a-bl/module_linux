@@ -25,6 +25,23 @@
         {% endwith %}
     </div>
 </div>
+
+<div id="subheader">
+    <div class="wishlist">
+        {% with total_items=wishlist|length %}
+            {% if wishlist|length > 0 %}
+                Your wishlist:
+                <a href="{% url "accounts:wishlist" %}">
+                    {{ total_items }} item{{ total_items|pluralize }},
+                    ${{ wishlist.get_total_price }}
+                </a>
+            {% else %}
+                Your wishlist is empty.
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
 <div id="content">
     {% block content %}
     {% endblock %}
