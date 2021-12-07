@@ -1,14 +1,14 @@
-{% extends "../sub_base.html" %}
+{% extends "base.html" %}
 {% block title %}Users Wish List{% endblock %}
 
-{% block sub_content %}
+{% block content %}
 <div class="col-12 mx-auto">
   <h1 class="h3">My Wishlist</h1>
   <div>Manage your Wishlist</div>
   <hr />
 
-  {% if wishlist %}
-  {% for product in wishlist  %}
+  {% if user.wishlist.all %}
+  {% for product in user.wishlist.all  %}
 
   <div class="card mb-3 rounded-0">
     <div class="row g-0">
@@ -25,7 +25,8 @@
           <h5 class="card-title">{{product.name}}</h5>
           <p class="card-text">{{product.description}}</p>
           <p class="card-text"><small class="text-muted">{{product.price}}</small></p>
-          <a type="button" class="btn btn-primary fw500 btn-sm" href="{% url 'account:user_wishlist' product.id %}">Remove from Wishlist</a>
+          <a type="button" class="btn btn-primary fw500 btn-sm"
+             href="{% url 'accounts:remove_wishlist_product' product.id %}">Remove from Wishlist</a>
         </div>
       </div>
     </div>

@@ -11,5 +11,8 @@ urlpatterns = [
     path('register/', views.RegisterUser.as_view(), name='register'),
     # wishlist
     path('wishlist', views.wishlist, name='wishlist'),
-    path('wishlist/add_to_wishlist/<int:id>', views.add_to_wishlist, name='user_wishlist'),
+    path('wishlist/add_to_wishlist/<int:id>', views.add_to_wishlist, name='add_product_to_wishlist'),
+    path('wishlist/remove_wishlist_product/<int:_id>', views.remove_wishlist_product, name='remove_wishlist_product'),
+
+
 ]

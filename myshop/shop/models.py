@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from django.conf import settings
 
 # Create your models here.
 
@@ -32,7 +31,6 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
-    users_wishlist = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_wishlist', blank=True)
 
     class Meta:
         ordering = ('name',)

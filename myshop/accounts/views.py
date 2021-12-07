@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 
 from shop.models import Product
+from accounts.models import User
 from .forms import UserRegisterForm
 
 
@@ -31,17 +32,25 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def wishlist(request):
-    products = Product.objects.filter(users_wishlist=request.user)
+    # products = Product.objects.filter(users_wishlist=request.user)
+    current_user = request.user
+    products = current_user.wishlist.all()
     return render(request, 'accounts/user_wish_list.html', {'wishlist': products})
 
 
 @login_required
 def add_to_wishlist(request, id):
     product = get_object_or_404(Product, id=id)
-    if product.users_wishlist.filter(id=request.user.id).exists():
-        product.users_wishlist.remove(request.user)
-        messages.success(request, product.name + ' has been removed from your Wishlist')
-    else:
-        product.users_wishlist.add(request.user)
-        messages.success(request, 'Added ' + product.name + ' to your Wishlist')
+    current_user = request.user
+    if not current_user.wishlist.filter(id=id).exists():
+        current_user.wishlist.add(product)
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+@login_required
+def remove_wishlist_product(request, _id):
+    product = get_object_or_404(Product, id=_id)
+    current_user = request.user
+    if current_user.wishlist.filter(id=_id).exists():
+        current_user.wishlist.remove(product)
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
