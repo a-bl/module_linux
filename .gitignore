@@ -2,7 +2,7 @@
 *.pyc
 *__pycache__*
 
-myshop/.idea/*
+*/.idea/*
 
 myshop/media
 myshop/venv
