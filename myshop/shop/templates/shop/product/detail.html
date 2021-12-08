@@ -14,6 +14,11 @@
             {% csrf_token %}
             <input type="submit" value="Add to cart">
         </form>
+        <form action="{% url "accounts:add_product_to_wishlist" product.id %}" method="post">
+            {{ wishlist_product_form }}
+            {% csrf_token %}
+            <input type="submit" value="Add to wishlist">
+        </form>
         {{ product.description|linebreaks }}
     </div>
 {% endblock %}

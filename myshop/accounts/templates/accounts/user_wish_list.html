@@ -1,0 +1,47 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}Users Wish List{% endblock %}
+
+{% block content %}
+<div class="col-12 mx-auto">
+  <h1 class="h3">My Wishlist</h1>
+  <div>Manage your Wishlist</div>
+  <hr />
+
+  {% if user.wishlist.all %}
+  {% for product in user.wishlist.all  %}
+
+  <div class="card mb-3 rounded-0">
+    <div class="row g-0">
+      <div class="col-md-10">
+        <div class="card-body">
+          <a href="{{ product.get_absolute_url }}">
+            <img src="
+                {% if product.image %}
+                    {{ product.image.url }}
+                {% else %}
+                    {% static "img/no_image.png" %}
+                {% endif %}" width=200 height=200>
+          </a>
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">{{ product.description }}</p>
+          <p class="card-text"><small class="text-muted">${{ product.price }}</small></p>
+          <form action="{% url 'accounts:remove_wishlist_product' product.id %}" method="post">
+            {{ remove_wishlist_product_form }}
+            {% csrf_token %}
+            <input type="submit" value="Remove from Wishlist">
+          <p><br /></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+  {% else %}
+  <p class="card-text">No products have been added to your wishlist yet</p>
+  {% endif %}
+
+
+
+</div>
+{% endblock %}

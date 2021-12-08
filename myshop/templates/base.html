@@ -11,6 +11,8 @@
     <a href="/" class="logo">My shop</a>
 </div>
 <div id="subheader">
+
+    <div style="align-content: right;float: right;">
     <div class="cart">
         {% with total_items=cart|length %}
             {% if cart|length > 0 %}
@@ -24,7 +26,49 @@
             {% endif %}
         {% endwith %}
     </div>
+
+
+    <div class="wishlist">
+    {% if user.is_authenticated %}
+        {% with total_items=user.wishlist.all|length %}
+            {% if user.wishlist.all|length > 0 %}
+                Your wishlist:
+                <a href="{% url "accounts:wishlist" %}">
+                    {{ total_items }} item{{ total_items|pluralize }}
+                </a>
+            {% else %}
+                Your wishlist is empty.
+            {% endif %}
+        {% endwith %}
+
+
+    {% endif %}
+
+    </div>
+    </div>
+
+    <div>
+        {% if user.is_authenticated %}
+        <div>{{ user.email }}</div>
+        <a href="{% url "accounts:logout" %}">
+            Logout
+        </a>
+        {% else %}
+        <a href="{% url "accounts:login" %}">
+            Login
+        </a>
+        <a href="{% url "accounts:register" %}">
+            Register
+        </a>
+        {% endif %}
+
+    </div>
 </div>
+
+<!--<div id="subheader">-->
+<!--    -->
+<!--</div>-->
+
 <div id="content">
     {% block content %}
     {% endblock %}
