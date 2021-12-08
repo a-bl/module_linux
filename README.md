@@ -36,12 +36,13 @@ To set up the PyShop project, here is the following guideline:
 
 - Run postgres and redis:
 ```bash
+cd myshop
 docker-compose up
 ```
 
 In another terminal:
 
-- Use the python virtualenv tool:
+- Use the python virtualenv tool, in the [myshop](./myshop) folder:
 ```bash
 virtualenv venv
 source venv/bin/activate

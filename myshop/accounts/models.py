@@ -21,7 +21,7 @@ class User(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'  # user authentication
-    REQUIRED_FIELDS = ['phone', 'first_name', 'last_name']  # ask when create super user in command line
+    REQUIRED_FIELDS = ['phone']  # ask when create super user in command line
 
     def get_wishlist(self):
         return "!!! \n".join([p.name for p in self.wishlist.all()])
