@@ -4,7 +4,8 @@ This is an application for an Online store website using the Django framework.
 
 ## UseCase Diagram ##
 
-![alt text](myshop/docs/assets/use_case_diagram.png | width=100)
+<img src="myshop/docs/assets/use_case_diagram.png" width="500" height="300">
+
 
 ## Project Structure ##
 
