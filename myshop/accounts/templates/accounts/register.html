@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'shop/base.html' %}
 
 {% block content %}
 
@@ -6,18 +6,28 @@
     {% csrf_token %}
 
     <small>{{ form.email.label_tag }}</small>
+    <p></p>
     {{ form.email }}
 
+    <p></p>
+
     <small>{{ form.phone.label_tag }}</small>
+    <p></p>
     {{ form.phone }}
 
+    <p></p>
+
     <small>{{ form.password.label_tag }}</small>
+    <p></p>
     {{ form.password }}
 
+    <p></p>
+
     <small>{{ form.password_confirm.label_tag }}</small>
+    <p></p>
     {{ form.password_confirm }}
 
-
+    <p></p>
 
     <br><input type="submit" class="btn btn-primary" value="Register"/>
 </form>

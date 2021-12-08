@@ -12,13 +12,13 @@ class UserAdmin(BaseUserAdmin):  # UserAdmin class is responsible for how the sh
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('__str__', 'email', 'phone', 'first_name', 'last_name', 'is_admin', 'get_wishlist')
+    list_display = ('__str__', 'email', 'phone', 'first_name', 'last_name', 'is_admin',)
     list_editable = ('first_name', 'last_name',)
     list_filter = ('is_admin',)
 
     # first form
     fieldsets = (
-        (None, {'fields': ('email', 'first_name', 'last_name', 'phone', 'password')}),
+        (None, {'fields': ('email', 'first_name', 'last_name', 'phone', 'password', 'wishlist')}),
         ('Personal Info', {'fields': ('is_active',)}),
         ('Permissions', {'fields': ('is_admin',)})
     )
@@ -29,7 +29,7 @@ class UserAdmin(BaseUserAdmin):  # UserAdmin class is responsible for how the sh
 
     search_fields = ('email',)
     ordering = ('email',)
-    filter_horizontal = ()
+    filter_horizontal = ('wishlist',)
 
 
 admin.site.register(User, UserAdmin)

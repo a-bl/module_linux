@@ -6,6 +6,7 @@ from django.conf import settings
 from .manager import MyUserManager
 from shop.models import Product
 
+
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=100, unique=True)
     first_name = models.CharField(max_length=100)
@@ -19,8 +20,8 @@ class User(AbstractBaseUser):
 
     objects = MyUserManager()
 
-    USERNAME_FIELD = 'email' # user authentication
-    REQUIRED_FIELDS = ['phone'] # ask when create super user in command line
+    USERNAME_FIELD = 'email'  # user authentication
+    REQUIRED_FIELDS = ['phone', 'first_name', 'last_name']  # ask when create super user in command line
 
     def get_wishlist(self):
         return "!!! \n".join([p.name for p in self.wishlist.all()])
