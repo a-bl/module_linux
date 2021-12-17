@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Questions</h1>
+    <p><a href="{{ url_for('add_question') }}">Add new question</a></p>
+    {% for question in qs %}
+        <table>
+            <tr valign="top">
+                <td>
+                    <h3>Question: {{ question.essence }}</h3>
+                    <p><a href="{{ url_for('question', id=question.id) }}">View Question</a></p>
+                    <p>Supposed Answer: {{ question.supposed_answer }}</p>
+                    <p>Max Grade: {{ question.max_grade }}</p>
+                </td>
+            </tr>
+        </table>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Add Grade</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.interview_id.label }}<br>
+            {{ form.interview_id(size=32) }}<br>
+            {% for error in form.interview_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.question_id.label }}<br>
+            {{ form.question_id(size=64) }}<br>
+            {% for error in form.question_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.rater_id.label }}<br>
+            {{ form.rater_id(size=32) }}<br>
+            {% for error in form.rater_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.grade.label }}<br>
+            {{ form.grade(size=32) }}<br>
+            {% for error in form.grade.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

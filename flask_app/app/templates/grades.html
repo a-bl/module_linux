@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Grades</h1>
+    <p><a href="{{ url_for('add_grade') }}">Add new grade</a></p>
+    {% for grade in gs %}
+        <table>
+            <tr valign="top">
+                <td>
+                    <p>Interview: {{ grade.interview_id }}</p>
+                    <p>Question: {{ grade.question_id }}</p>
+                    <p>Interviewer: {{ grade.rater_id }}</p>
+                    <p>Grade: {{ grade.grade }}</p>
+                    {% if grade == request.form %}
+                    <p><a href="{{ url_for('edit_grade') }}">Edit grade</a></p>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    {% endfor %}
+{% endblock %}

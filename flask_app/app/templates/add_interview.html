@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Add Interview</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.candidate.label }}<br>
+            {{ form.candidate(size=32) }}<br>
+            {% for error in form.candidate.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.questions.label }}<br>
+            {{ form.questions(size=64) }}<br>
+            {% for error in form.questions.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.date.label }}<br>
+            {{ form.date(size=32) }}<br>
+            {% for error in form.date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.start_time.label }}<br>
+            {{ form.start_time(size=32) }}<br>
+            {% for error in form.start_time.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.end_time.label }}<br>
+            {{ form.end_time(size=32) }}<br>
+            {% for error in form.end_time.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.users.label }}<br>
+            {{ form.users(size=32) }}<br>
+            {% for error in form.users.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.grade.label }}<br>
+            {{ form.grade(size=32) }}<br>
+            {% for error in form.grade.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
