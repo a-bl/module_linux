@@ -5,7 +5,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from config import Config
+from flask_app.config import Config
+from flask_marshmallow import Marshmallow
+from flask_restful import Api, reqparse
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -13,6 +15,8 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
+ma = Marshmallow(app)
+api = Api()
 
 if not app.debug:
     if app.config['MAIL_SERVER']:
@@ -42,4 +46,4 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('Microblog startup')
 
-from app import routes, models, errors, forms
+from flask_app.app import routes, models, errors, forms

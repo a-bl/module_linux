@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import debian.debtags
-from app import db, login
+from flask_app.app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from hashlib import md5
@@ -69,7 +69,7 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     essence = db.Column(db.Text)
     supposed_answer = db.Column(db.String(64))
-    max_grade = db.Column(db.Integer, default=10)
+    max_grade = db.Column(db.Integer)
     short_description = db.Column(db.String(140))
 
     def __repr__(self):

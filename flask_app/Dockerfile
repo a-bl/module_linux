@@ -6,13 +6,16 @@ FROM python:3.8
 WORKDIR /app
 
 ENV FLASK_APP flask_app.py
+ENV DATABASE_URL 'postgresql://admin:admin@localhost/flask_app'
 
 COPY requirements.txt /app/requirements.txt
-COPY flask_app /app
+COPY . /app/
 
 RUN apt-get update && pip install --upgrade pip && \
     apt-get -y install libpq-dev gcc && \
     pip install psycopg2 && pip install -r requirements.txt
 
 EXPOSE 5000
-CMD ['python', 'flask_app.py']
+#EXPOSE 5432
+
+CMD ["python", "flask_app.py"]
