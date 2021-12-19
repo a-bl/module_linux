@@ -8,7 +8,7 @@ WORKDIR /app
 ENV FLASK_APP flask_app.py
 
 COPY requirements.txt /app/requirements.txt
-COPY . /app
+COPY flask_app /app
 
 RUN apt-get update && pip install --upgrade pip && \
     apt-get -y install libpq-dev gcc && \
