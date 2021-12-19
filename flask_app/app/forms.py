@@ -55,6 +55,16 @@ class EditProfileForm(FlaskForm):
                 raise ValidationError('Please use a different username.')
 
 
+class UserFrom(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()])
+    email = StringField("Email")
+    first_name = StringField("First Name")
+    last_name = StringField("Lask Name")
+    password = PasswordField("Password", validators=[DataRequired()])
+    is_admin = BooleanField("Admin status", default=False)
+    submit = SubmitField("Add")
+
+
 class AddQuestionForm(FlaskForm):
     essence = TextAreaField('Question description', validators=[DataRequired()])
     supposed_answer = StringField('Answer', validators=[DataRequired()])

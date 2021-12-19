@@ -5,8 +5,8 @@ from werkzeug.urls import url_parse
 from flask_app.app import app, db
 from flask_app.app.forms import LoginForm, RegistrationForm
 from flask_app.app.models import User, Interview, Question, Grade
-from flask_app.app.forms import EditProfileForm, BookinterviewForm, AddQuestionForm, EditQuestionForm, GradeForm, EditGradeForm, \
-    AddInterviewForm
+from flask_app.app.forms import EditProfileForm, AddQuestionForm, EditQuestionForm, GradeForm, EditGradeForm, \
+    AddInterviewForm, UserFrom
 
 
 @app.before_request
@@ -21,13 +21,7 @@ def before_request():
 @login_required
 def index():
     users = User.query.all()
-    for user in users:
-        posts = [
-            {'author': user, 'body': 'Test post #1'},
-            {'author': user, 'body': 'Test post #2'}
-        ]
-    questions = Question.query.all()
-    return render_template('index.html', title='Home', users=users, posts=posts, questions=questions)
+    return render_template('index.html', title='Home', users=users)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -46,38 +40,6 @@ def login():
             next_page = url_for('index')
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
-# recruiter routes
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     if current_user.is_authenticated:
-#         if current_user.role == "Manager":
-#             interviews = Interview.query.order_by(Interview.id)
-#             grades = Grade.query.order_by(Grade.id)
-#             return render_template('manager_candidates.html', interviews=interviews, grades=grades)
-#         elif current_user.role == "Interviewer":
-#             return render_template('interviewer_layout.html')
-#         else:
-#             candidates = Interview.query.order_by(Interview.candidate)
-#             return render_template('all_candidates.html', candidates=candidates)
-#
-#     form = LoginForm()
-#     if request.method == 'POST' and form.validate_on_submit():
-#         user = User.query.filter_by(username=form.username.data).first()
-#         if user and user.password == form.password.data:
-#             login_user(user)
-#             if current_user.role == "Manager":
-#                 interviews = Interview.query.order_by(Interview.id)
-#                 grades = Grade.query.order_by(Grade.id)
-#                 return render_template('manager_candidates.html', interviews=interviews, grades=grades)
-#             elif current_user.role == "Interviewer":
-#                 return render_template('interviewer_layout.html')
-#             else:
-#                 candidates = Interview.query.order_by(Interview.candidate)
-#                 return render_template('all_candidates.html', candidates=candidates)
-#         else:
-#             flash('Login Unsuccessful. Please check email and password', 'danger')
-#
-#     return render_template('login.html', title='Login', form=form)
 
 
 @app.route('/logout')
@@ -99,6 +61,26 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/add_user', methods=['GET', 'POST'])
+def add_user():
+    form = UserFrom()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, first_name=form.first_name.data, last_name=form.last_name.data,
+                    email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulation, you have just add a new user!')
+        return redirect(url_for('add_user'))
+    return render_template('add_user', form=form)
+
+
+@app.route('/users')
+def users():
+    users = User.query.all()
+    return render_template('index.html', title='Users', users=users)
 
 
 @app.route('/user/<username>')
