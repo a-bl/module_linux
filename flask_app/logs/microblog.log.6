@@ -1,4 +1,4 @@
-2021-12-17 15:34:54,827 ERROR: Exception on /add_interview [GET] [in /home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/app.py:1457]
+2021-12-17 15:50:23,236 ERROR: Exception on /add_interview [GET] [in /home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1702, in _execute_context
     context = constructor(
@@ -10,7 +10,7 @@ Traceback (most recent call last):
     return self._dbapi_connection.cursor()
   File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 1083, in cursor
     return self.dbapi_connection.cursor(*args, **kwargs)
-sqlite3.ProgrammingError: SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 140348318283584 and this is thread id 140348253480704.
+sqlite3.ProgrammingError: SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 140044003829568 and this is thread id 140043939026688.
 
 The above exception was the direct cause of the following exception:
 
@@ -25,7 +25,7 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/flask_app/app/routes.py", line 206, in add_interview
+  File "/home/anastasiia/projects/flask_app/app/routes.py", line 207, in add_interview
     return render_template('add_interview.html', title='Add Interview', form=form)
   File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/templating.py", line 147, in render_template
     return _render(
@@ -83,11 +83,10 @@ Traceback (most recent call last):
     return self._dbapi_connection.cursor()
   File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 1083, in cursor
     return self.dbapi_connection.cursor(*args, **kwargs)
-sqlalchemy.exc.ProgrammingError: (sqlite3.ProgrammingError) SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 140348318283584 and this is thread id 140348253480704.
+sqlalchemy.exc.ProgrammingError: (sqlite3.ProgrammingError) SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 140044003829568 and this is thread id 140043939026688.
 [SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.about_me AS user_about_me, user.last_seen AS user_last_seen 
 FROM user 
 WHERE user.id = ?]
 [parameters: [{'pk_1': 2}]]
 (Background on this error at: https://sqlalche.me/e/14/f405)
-2021-12-17 15:37:42,047 INFO: Microblog startup [in /home/anastasiia/projects/flask_app/app/__init__.py:43]
-2021-12-17 15:38:34,661 INFO: Microblog startup [in /home/anastasiia/projects/flask_app/app/__init__.py:43]
+2021-12-17 15:50:35,803 INFO: Microblog startup [in /home/anastasiia/projects/flask_app/app/__init__.py:43]

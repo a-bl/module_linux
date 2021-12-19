@@ -8,8 +8,10 @@
             <tr valign="top">
                 <td>
                     <h3>Interview details:</h3>
-                    <p>Question: {{ interview.question }}</p>
-                    {% for us in grade.users %}
+                    {% for question in interview.questions %}
+                    <p>Question: {{ question }}</p>
+                    {% endfor %}
+                    {% for user in interview.interviewers %}
                         <p>Interviewer: {{ us.username }}</p>
                     {% endfor %}
                     <p>Grade: {{ interview.grade }}</p>

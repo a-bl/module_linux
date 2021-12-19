@@ -5,23 +5,23 @@
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
-            {{ form.interview_id.label }}<br>
-            {{ form.interview_id(size=32) }}<br>
-            {% for error in form.interview_id.errors %}
+            {{ form.interview.label }}<br>
+            {{ form.interview(size=32) }}<br>
+            {% for error in form.interview.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.question_id.label }}<br>
-            {{ form.question_id(size=64) }}<br>
-            {% for error in form.question_id.errors %}
+            {{ form.question.label }}<br>
+            {{ form.question(size=64) }}<br>
+            {% for error in form.question.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.rater_id.label }}<br>
-            {{ form.rater_id(size=32) }}<br>
-            {% for error in form.rater_id.errors %}
+            {{ form.interviewer.label }}<br>
+            {{ form.interviewer(size=32) }}<br>
+            {% for error in form.interviewer.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>

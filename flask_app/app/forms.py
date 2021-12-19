@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateField, SelectField, \
     IntegerField, SelectMultipleField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
-from flask_app.app.models import User, Interview, Grade, Question
+from app.models import User, Interview, Grade, Question
 from datetime import datetime
 
 
@@ -40,13 +40,15 @@ class RegistrationForm(FlaskForm):
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
-    last_name = StringField('Last Name', validators=DataRequired())
+    last_name = StringField('Last Name', validators=[DataRequired()])
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
     submit = SubmitField('Edit')
 
-    def __init__(self, original_username, *args, **kwargs):
+    def __init__(self, original_username, original_name, original_surname, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.original_username = original_username
+        self.original_name = original_name
+        self.original_surname = original_surname
 
     def validate_username(self, username):
         if username.data != self.original_username:

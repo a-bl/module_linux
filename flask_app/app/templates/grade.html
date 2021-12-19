@@ -4,9 +4,9 @@
     <table>
             <tr valign="top">
                 <td>
-                    <p>Interview: {{ grade.interview_id }}</p>
-                    <p>Question: {{ grade.question_id }}</p>
-                    {% for ui in grade.rater_id %}
+                    <p>Interview: {{ grade.interview }}</p>
+                    <p>Question: {{ grade.question }}</p>
+                    {% for ui in grade.interviewer %}
                         <p>Interviewer: {{ ui.username }}</p>
                     {% endfor %}
                     <p>Grade: {{ grade.grade }}</p>

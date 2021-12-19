@@ -1,19 +1,4 @@
-2021-12-17 15:38:42,351 ERROR: Exception on /add_interview [GET] [in /home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/app.py:1457]
-Traceback (most recent call last):
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1702, in _execute_context
-    context = constructor(
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1013, in _init_compiled
-    self.cursor = self.create_cursor()
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1361, in create_cursor
-    return self.create_default_cursor()
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1364, in create_default_cursor
-    return self._dbapi_connection.cursor()
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 1083, in cursor
-    return self.dbapi_connection.cursor(*args, **kwargs)
-sqlite3.ProgrammingError: SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 140493597816640 and this is thread id 140493533013760.
-
-The above exception was the direct cause of the following exception:
-
+2021-12-17 15:50:40,882 ERROR: Exception on /add_interview [GET] [in /home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -25,7 +10,7 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/flask_app/app/routes.py", line 206, in add_interview
+  File "/home/anastasiia/projects/flask_app/app/routes.py", line 207, in add_interview
     return render_template('add_interview.html', title='Add Interview', form=form)
   File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/templating.py", line 147, in render_template
     return _render(
@@ -39,54 +24,41 @@ Traceback (most recent call last):
     {% extends "base.html" %}
   File "/home/anastasiia/projects/flask_app/app/templates/base.html", line 34, in top-level template code
     {% block content %}{% endblock %}
-  File "/home/anastasiia/projects/flask_app/app/templates/add_interview.html", line 50, in block 'content'
-    {{ form.grade.label }}<br>
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/wtforms/fields/core.py", line 436, in __html__
-    return self()
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/wtforms/fields/core.py", line 445, in __call__
-    text = escape(text or self.text)
-  File "/home/anastasiia/projects/flask_app/app/models.py", line 135, in __repr__
-    return f'{self.rater} gives {self.interview} {self.grade} for {self.question}'
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 481, in __get__
-    return self.impl.get(state, dict_)
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 941, in get
-    value = self._fire_loader_callables(state, key, passive)
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 977, in _fire_loader_callables
-    return self.callable_(state, passive)
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/orm/strategies.py", line 910, in _load_for_state
-    return self._emit_lazyload(
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/orm/strategies.py", line 996, in _emit_lazyload
-    return loading.load_on_pk_identity(
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/orm/loading.py", line 530, in load_on_pk_identity
-    session.execute(
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1692, in execute
-    result = conn._execute_20(statement, params or {}, execution_options)
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
-    return meth(self, args_10style, kwargs_10style, execution_options)
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
-    return connection._execute_clauseelement(
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
-    ret = self._execute_context(
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1708, in _execute_context
-    self._handle_dbapi_exception(
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
-    util.raise_(
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
-    raise exception
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1702, in _execute_context
-    context = constructor(
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1013, in _init_compiled
-    self.cursor = self.create_cursor()
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1361, in create_cursor
-    return self.create_default_cursor()
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 1364, in create_default_cursor
-    return self._dbapi_connection.cursor()
-  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 1083, in cursor
-    return self.dbapi_connection.cursor(*args, **kwargs)
-sqlalchemy.exc.ProgrammingError: (sqlite3.ProgrammingError) SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 140493597816640 and this is thread id 140493533013760.
-[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.about_me AS user_about_me, user.last_seen AS user_last_seen 
-FROM user 
-WHERE user.id = ?]
-[parameters: [{'pk_1': 2}]]
-(Background on this error at: https://sqlalche.me/e/14/f405)
-2021-12-17 15:50:17,396 INFO: Microblog startup [in /home/anastasiia/projects/flask_app/app/__init__.py:43]
+  File "/home/anastasiia/projects/flask_app/app/templates/add_interview.html", line 43, in block 'content'
+    <!--            {{ form.users.label }}<br>-->
+  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/jinja2/environment.py", line 474, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'app.forms.AddInterviewForm object' has no attribute 'users'
+2021-12-17 15:51:37,848 INFO: Microblog startup [in /home/anastasiia/projects/flask_app/app/__init__.py:43]
+2021-12-17 15:51:42,205 ERROR: Exception on /add_interview [GET] [in /home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/app.py:1457]
+Traceback (most recent call last):
+  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/anastasiia/projects/flask_app/app/routes.py", line 207, in add_interview
+    return render_template('add_interview.html', title='Add Interview', form=form)
+  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/templating.py", line 147, in render_template
+    return _render(
+  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
+    rv = template.render(context)
+  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/jinja2/environment.py", line 1291, in render
+    self.environment.handle_exception()
+  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/jinja2/environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/anastasiia/projects/flask_app/app/templates/add_interview.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/anastasiia/projects/flask_app/app/templates/base.html", line 34, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/anastasiia/projects/flask_app/app/templates/add_interview.html", line 43, in block 'content'
+    <!--            {{ form.users.label }}<br>-->
+  File "/home/anastasiia/projects/flask_app/venv/lib/python3.8/site-packages/jinja2/environment.py", line 474, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'app.forms.AddInterviewForm object' has no attribute 'users'
+2021-12-17 15:51:55,964 INFO: Microblog startup [in /home/anastasiia/projects/flask_app/app/__init__.py:43]

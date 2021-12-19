@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import debian.debtags
-from flask_app.app import db, login
+from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from hashlib import md5
@@ -24,7 +24,7 @@ users_interview = db.Table('users_interview',
 
 interviews_question = db.Table('interviews_question',
                                db.Column('interview_id', db.Integer, db.ForeignKey('interview.id'), primary_key=True),
-                               db.Column('question_id', db.Integer, db.ForeignKey('question.id'), prinmary_key=True)
+                               db.Column('question_id', db.Integer, db.ForeignKey('question.id'), primary_key=True)
                                )
 
 
@@ -79,7 +79,8 @@ class Question(db.Model):
     def get_selection_list():
         result = []
         for i in Question.query.all():
-            result.append((f'{i.id}', f'{i.short_description}'))
+            # result.append((f'{i.id}', f'{i.short_description}'))
+            result.append(i.id)
         return result
 
 

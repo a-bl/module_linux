@@ -9,6 +9,9 @@
             <td><img src="{{ user.avatar(128) }}"></td>
             <td>
                 <h3>{{ user.username }}</h3>
+                {{ user.first_name }} {{ user.last_name }}
+                <br>
+                <p>Email: {{ user.email }}</p>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                 {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
             </td>

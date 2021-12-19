@@ -2,10 +2,10 @@ from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
-from flask_app.app import app, db
-from flask_app.app.forms import LoginForm, RegistrationForm
-from flask_app.app.models import User, Interview, Question, Grade
-from flask_app.app.forms import EditProfileForm, AddQuestionForm, EditQuestionForm, GradeForm, EditGradeForm, \
+from app import app, db
+from app.forms import LoginForm, RegistrationForm
+from app.models import User, Interview, Question, Grade
+from app.forms import EditProfileForm, AddQuestionForm, EditQuestionForm, GradeForm, EditGradeForm, \
     AddInterviewForm, UserFrom
 
 
@@ -87,19 +87,17 @@ def users():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
-    ]
-    return render_template('user.html', user=user, posts=posts)
+    return render_template('user.html', user=user)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    form = EditProfileForm(current_user.username)
+    form = EditProfileForm(current_user.username, current_user.first_name, current_user.last_name)
     if form.validate_on_submit():
         current_user.username = form.username.data
+        current_user.first_name = form.first_name.data
+        current_user.last_name = form.last_name.data
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
@@ -110,14 +108,14 @@ def edit_profile():
     return render_template('edit_profile.html', title='Edit Profile', form=form)
 
 
-@app.route('/add_question/', methods=['GET', 'POST'])
+@app.route('/add_question', methods=['GET', 'POST'])
 @login_required
 def add_question():
     form = AddQuestionForm()
     if form.validate_on_submit():
-        q = Question(essence=form.essence.data, supposed_answer=form.supposed_answer.data,
-                     max_grade=form.max_grade.data)
-        db.session.add(q)
+        _question = Question(essence=form.essence.data, supposed_answer=form.supposed_answer.data,
+                             max_grade=form.max_grade.data, short_description=form.short_description.data)
+        db.session.add(_question)
         db.session.commit()
         flash('Congratulations, you have just created a new question!')
         return redirect(url_for('questions'))
@@ -163,8 +161,10 @@ def edit_question(id):
 def add_grade():
     form = GradeForm()
     if form.validate_on_submit():
-        g = Grade(grade=form.grade.data, rater_id=form.rater_id.data,
-                  interview_id=form.interview_id.data, question_id=form.question_id.data)
+        user = User.query.filter_by(id=form.interviewers.data).first()
+        question = Question.query.filter_by(id=form.questions.data).first()
+        interview = Interview.query.filter_by(id=form.interviews.data).first()
+        g = Grade(interviewer=user, question=question, interview=interview, grade=3)
         db.session.add(g)
         db.session.commit()
         flash('Congratulations, you have just created a new grade!')
@@ -209,12 +209,24 @@ def edit_grade():
 @app.route('/add_interview', methods=['GET', 'POST'])
 @login_required
 def add_interview():
-    form = AddInterviewForm()
+    form = AddInterviewForm().new()
     if form.validate_on_submit():
-        inw = Interview(candidate=form.candidate.data, date=form.date.data, satrt_time=form.start_time.data,
-                        end_time=form.end_time.data, questions=form.questions.data,
-                        users=User.query.filter(User.id.in_(form.users.data)).all())
-        db.session.add(inw)
+        questions = []
+        interviewers = []
+        for question_id in form.questions.data:
+            question = Question.query.filter_by(id=question_id).first()
+            questions.append(question)
+        for interviewer_id in form.interviewers.data:
+            user = User.query.filter_by(id=interviewer_id).first()
+            interviewers.append(user)
+        interview = Interview(candidate=form.candidate.data, questions=questions, interviewers=interviewers,
+                              date=form.date.data, start_time=form.start_time.data, end_time=form.end_time.data)
+        all_interview = [interview]
+        for user in interviewers:
+            for question in questions:
+                grade = Grade(question=question, interviewer=user, interview=interview)
+                all_interview.append(grade)
+        db.session.add_all(all_interview)
         db.session.commit()
         flash('Congratulations, you have just created a new interview!')
         return redirect(url_for('interviews'))
@@ -233,46 +245,3 @@ def interviews():
 def interview(id):
     inw = Interview.query.filter_by(id=id).first_or_404()
     return render_template('interview.html', interview=inw)
-
-
-@app.route('/book', methods=['GET', 'POST'])
-@login_required
-def book():
-    form = BookinterviewForm()
-    if form.validate_on_submit():
-
-        # check time collision
-        interviewcollisions = Interview.query.filter_by(
-            date=datetime.combine(form.date.data, datetime.min.time())).filter_by(email=form.interviewers.data).all()
-        print(len(interviewcollisions))
-        for interviewcollision in interviewcollisions:
-            # [a, b] overlaps with [x, y] iff b > x and a < y
-            if (form.start_time.data < interviewcollision.end_time and (
-                    form.end_time.data) > interviewcollision.start_time):
-                flash(
-                    f'The time from {interviewcollision.start_time} to {interviewcollision.end_time} is already booked by {Interviewer.query.filter_by(email=interviewcollision.email).first().email}.')
-                return redirect(url_for('book'))
-
-        interviewcollisions2 = Interview.query.filter_by(
-            date=datetime.combine(form.date.data, datetime.min.time())).filter_by(
-            bookerEmail=form.interviewers.data).all()
-        print(len(interviewcollisions2))
-        for interviewcollision in interviewcollisions2:
-            # [a, b] overlaps with [x, y] iff b > x and a < y
-            if (form.start_time.data < interviewcollision.end_time and (
-                    form.end_time.data) > interviewcollision.start_time):
-                flash(
-                    f'The time from {interviewcollision.start_time} to {interviewcollision.end_time} is already booked by {Interviewer.query.filter_by(email=interviewcollision.bookerEmail).first().email}.')
-                return redirect(url_for('book'))
-
-        end_time = form.end_time.data
-
-        interview = Interview(candidate=form.candidate.data, date=form.date.data, start_time=form.start_time.data,
-                              end_time=form.end_time.data, email=form.interviewer.data)
-        db.session.add(interview)
-
-        db.session.commit()
-
-        flash('Interview Scheduling success!')
-        return redirect(url_for('index'))
-    return render_template('book.html', title='Schedule Interviews', form=form)
