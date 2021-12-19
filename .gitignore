@@ -1,8 +1,8 @@
 .idea/*
-*.pyc
-*__pycache__*
-
+/flask_app/logs/*
 */.idea/*
-
-myshop/media
-myshop/venv
+/flask_app/venv
+/flask_app/app.db
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
