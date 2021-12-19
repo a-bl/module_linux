@@ -1,13 +1,18 @@
-FROM ubuntu:20.04
-MAINTAINER Anastasiia Blyzniuk 'blyzniuk.anastasiia@gmail.com'
+#FROM ubuntu:20.04
+#MAINTAINER Anastasiia Blyzniuk 'blyzniuk.anastasiia@gmail.com'
 #my base image
-#FROM python:3.8
-RUN apt-get update
-RUN apt-get upgrade -y && \
-    apt-get install -y python3-pip python3-dev
-COPY . /flask_app
-WORKDIR /flask_app
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+FROM python:3.8
+
+WORKDIR /app
+
+ENV FLASK_APP flask_app.py
+
+COPY requirements.txt /app/requirements.txt
+COPY . /app
+
+RUN apt-get update && pip install --upgrade pip && \
+    apt-get -y install libpq-dev gcc && \
+    pip install psycopg2 && pip install -r requirements.txt
+
 EXPOSE 5000
 CMD ['python', 'flask_app.py']
