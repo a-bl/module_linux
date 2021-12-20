@@ -100,14 +100,13 @@ class EditQuestionForm(FlaskForm):
 
 class AddInterviewForm(FlaskForm):
     candidate = StringField('Candidate Full Name', validators=[DataRequired()])
-    questions = SelectMultipleField('Select Questions', coerce=str, choices=Question.get_selection_list())
+    questions = SelectMultipleField('Select Questions', coerce=str)
     # date = DateField('Choose date', format='%Y-%m-%d', default=date.today(), validators=[DataRequired()])
     # start_time = SelectField('Choose starting time(in 24hr expression)', coerce=int,
     #                          choices=[(i, i) for i in range(9, 18)], validators=[DataRequired()])
     # end_time = SelectField('Choose starting time(in 24hr expression)', coerce=int,
     #                        choices=[(i, i) for i in range(9, 18)], validators=[DataRequired()])
-    interviewers = SelectMultipleField('Select Interviewers', coerce=str, validators=[DataRequired()],
-                                       choices=User.get_selection_list())
+    interviewers = SelectMultipleField('Select Interviewers', coerce=str, validators=[DataRequired()])
     submit = SubmitField('Add')
 
     def __init__(self, *args, **kwargs):
@@ -122,9 +121,9 @@ class AddInterviewForm(FlaskForm):
 
 
 class GradeForm(FlaskForm):
-    questions = SelectField('Question', coerce=int, choices=Question.get_selection_list())
-    interviewers = SelectField('Interviewer', coerce=str, choices=User.get_selection_list())
-    interviews = SelectField('Interview', coerce=int, choices=Interview.get_selection_list())
+    questions = SelectField('Question', coerce=int)
+    interviewers = SelectField('Interviewer', coerce=str)
+    interviews = SelectField('Interview', coerce=int)
     grade = SelectField('Grade', default=1, coerce=int, choices=[i for i in range(0, 11)])
     submit = SubmitField('Add')
 
@@ -138,9 +137,9 @@ class GradeForm(FlaskForm):
 
 
 class EditGradeForm(FlaskForm):
-    questions = SelectField('Question', coerce=int, choices=Question.get_selection_list())
-    interviewers = SelectField('Interviewer', coerce=str, choices=User.get_selection_list())
-    interviews = SelectField('Interview', coerce=int, choices=Interview.get_selection_list())
+    questions = SelectField('Question', coerce=int)
+    interviewers = SelectField('Interviewer', coerce=str)
+    interviews = SelectField('Interview', coerce=int)
     submit = SubmitField('Edit')
 
     @classmethod
