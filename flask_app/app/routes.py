@@ -73,8 +73,8 @@ def add_user():
         db.session.add(user)
         db.session.commit()
         flash('Congratulation, you have just add a new user!')
-        return redirect(url_for('add_user'))
-    return render_template('add_user', form=form)
+        return redirect(url_for('users'))
+    return render_template('add_user.html', form=form)
 
 
 @app.route('/users')
@@ -101,7 +101,7 @@ def edit_profile():
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit_profile'))
+        return redirect(url_for('users'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
@@ -145,6 +145,7 @@ def edit_question(id):
     if form.validate_on_submit():
         q.essence = form.essence.data
         q.supposed_answer = form.supposed_answer.data
+        q.short_description = form.short_description.data
         q.max_grade = form.max_grade.data
         db.session.commit()
         flash('Your changes have been saved.')
@@ -164,7 +165,7 @@ def add_grade():
         user = User.query.filter_by(id=form.interviewers.data).first()
         question = Question.query.filter_by(id=form.questions.data).first()
         interview = Interview.query.filter_by(id=form.interviews.data).first()
-        g = Grade(interviewer=user, question=question, interview=interview, grade=3)
+        g = Grade(interviewer=user, question=question, interview=interview, grade=form.grade.data)
         db.session.add(g)
         db.session.commit()
         flash('Congratulations, you have just created a new grade!')
@@ -186,9 +187,9 @@ def grade(id):
     return render_template('grade.html', grade=g)
 
 
-@app.route('/edit_grade', methods=['GET', 'POST'])
+@app.route('/edit_grade/<id>', methods=['GET', 'POST'])
 @login_required
-def edit_grade():
+def edit_grade(id):
     form = EditGradeForm(request.form)
     if form.validate_on_submit():
         request.form.grade = form.grade.data
@@ -219,14 +220,14 @@ def add_interview():
         for interviewer_id in form.interviewers.data:
             user = User.query.filter_by(id=interviewer_id).first()
             interviewers.append(user)
-        interview = Interview(candidate=form.candidate.data, questions=questions, interviewers=interviewers,
-                              date=form.date.data, start_time=form.start_time.data, end_time=form.end_time.data)
-        all_interview = [interview]
+        interview = Interview(candidate=form.candidate.data, questions=questions, interviewers=interviewers)
+                              # date=form.date.data, start_time=form.start_time.data, end_time=form.end_time.data)
+        all = [interview]
         for user in interviewers:
             for question in questions:
                 grade = Grade(question=question, interviewer=user, interview=interview)
-                all_interview.append(grade)
-        db.session.add_all(all_interview)
+                all.append(grade)
+        db.session.add_all(all)
         db.session.commit()
         flash('Congratulations, you have just created a new interview!')
         return redirect(url_for('interviews'))

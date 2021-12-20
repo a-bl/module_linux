@@ -1,6 +1,5 @@
 from datetime import datetime
 
-import debian.debtags
 from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -79,8 +78,8 @@ class Question(db.Model):
     def get_selection_list():
         result = []
         for i in Question.query.all():
-            # result.append((f'{i.id}', f'{i.short_description}'))
-            result.append(i.id)
+            result.append((f'{i.id}', f'{i.short_description}'))
+            # result.append(i.id)
         return result
 
 
@@ -103,8 +102,8 @@ class Interview(db.Model):
     def get_selection_list():
         result = []
         for i in Interview.query.all():
-            result.append((f'{i.id}', f'{i.candidate_name}'))
-        return
+            result.append((f'{i.id}', f'{i.candidate}'))
+        return result
 
 
 class Grade(db.Model):
@@ -115,7 +114,7 @@ class Grade(db.Model):
     interviewer = db.relationship("User", backref="grades")
     interview_id = db.Column(db.Integer, db.ForeignKey('interview.id'))  # many to one
     interview = db.relationship("Interview", backref="grades")
-    grade = db.Column(db.Integer, default=0)
+    grade = db.Column(db.Integer, default=1)
 
     def __repr__(self):
         return f'{self.interviewer} gives {self.interview} {self.grade} for {self.question}'

@@ -8,16 +8,13 @@
             <tr valign="top">
                 <td>
                     <h3>Interview details:</h3>
+                    <p><a href="{{ url_for('interview', id=interview.id) }}">View Interview</a></p>
                     {% for question in interview.questions %}
                     <p>Question: {{ question }}</p>
                     {% endfor %}
                     {% for user in interview.interviewers %}
-                        <p>Interviewer: {{ us.username }}</p>
+                        <p>Interviewer: {{ user.first_name }} {{ user.last_name }}</p>
                     {% endfor %}
-                    <p>Grade: {{ interview.grade }}</p>
-                    <p>Date: {{ interview.date }}</p>
-                    <p>Start time: {{ interview.start_time }}</p>
-                    <p>End time: {{ interview.end_time }}</p>
                     {% if interview == request.form %}
                     <p><a href="{{ url_for('edit_interview') }}">Edit interview</a></p>
                     {% endif %}

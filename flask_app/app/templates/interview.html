@@ -9,12 +9,8 @@
                     <p>Question: {{ question }}</p>
                     {% endfor %}
                     {% for user in interview.interviewers %}
-                        <p>Interviewer: {{ user.username }}</p>
+                        <p>Interviewer: {{ user.first_name }} {{ user.last_name }}</p>
                     {% endfor %}
-                    <p>Grade: {{ interview.grade }}</p>
-                    <p>Date: {{ interview.date }}</p>
-                    <p>Start time: {{ interview.start_time }}</p>
-                    <p>End time: {{ interview.end_time }}</p>
                     {% if grade == request.form %}
                     <p><a href="{{ url_for('edit_interview') }}">Edit interview</a></p>
                     {% endif %}

@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextA
     IntegerField, SelectMultipleField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User, Interview, Grade, Question
-from datetime import datetime
+from datetime import datetime, date
 
 
 class LoginForm(FlaskForm):
@@ -101,13 +101,11 @@ class EditQuestionForm(FlaskForm):
 class AddInterviewForm(FlaskForm):
     candidate = StringField('Candidate Full Name', validators=[DataRequired()])
     questions = SelectMultipleField('Select Questions', coerce=str, choices=Question.get_selection_list())
-    date = DateField('Choose date', format="%m/%d/%Y", validators=[DataRequired()])
-    start_time = SelectField('Choose starting time(in 24hr expression)', coerce=int,
-                             choices=[(i, i) for i in range(9, 18)], validators=[DataRequired()])
-    end_time = SelectField('Choose starting time(in 24hr expression)', coerce=int,
-                           choices=[(i, i) for i in range(9, 18)], validators=[DataRequired()])
-    # users = SelectMultipleField('Select interviewers', coerce=str, validators=[DataRequired()],
-    #                             choices=[(user.id, user.username) for user in User.query.order_by('username').all()])
+    # date = DateField('Choose date', format='%Y-%m-%d', default=date.today(), validators=[DataRequired()])
+    # start_time = SelectField('Choose starting time(in 24hr expression)', coerce=int,
+    #                          choices=[(i, i) for i in range(9, 18)], validators=[DataRequired()])
+    # end_time = SelectField('Choose starting time(in 24hr expression)', coerce=int,
+    #                        choices=[(i, i) for i in range(9, 18)], validators=[DataRequired()])
     interviewers = SelectMultipleField('Select Interviewers', coerce=str, validators=[DataRequired()],
                                        choices=User.get_selection_list())
     submit = SubmitField('Add')
@@ -115,28 +113,19 @@ class AddInterviewForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    # def __init__(self, questions, users, grade, *args, **kwargs):
-    #     super(AddInterviewForm, self).__init__(questions, users,grade)
-    #     self.questions = questions
-    #     self.users = users
-    #     self.grade = grade
-
-    # def validate_candidate(self, candidate):
-    #     candidate = Interview.query.filter_by(candidate=candidate.data).first()
-    #     if candidate is not None:
-    #         raise ValidationError('Please use a different candidate.')
     @classmethod
     def new(cls):
         form = cls()
         form.interviewers.choices = User.get_selection_list()
         form.questions.choices = Question.get_selection_list()
-        return
+        return form
 
 
 class GradeForm(FlaskForm):
     questions = SelectField('Question', coerce=int, choices=Question.get_selection_list())
     interviewers = SelectField('Interviewer', coerce=str, choices=User.get_selection_list())
     interviews = SelectField('Interview', coerce=int, choices=Interview.get_selection_list())
+    grade = SelectField('Grade', default=1, coerce=int, choices=[i for i in range(0, 11)])
     submit = SubmitField('Add')
 
     @classmethod
