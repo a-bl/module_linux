@@ -1,16 +1,14 @@
-#FROM ubuntu:20.04
-#MAINTAINER Anastasiia Blyzniuk 'blyzniuk.anastasiia@gmail.com'
-#my base image
-FROM python:3.8-slim-buster
+FROM python:3.9.5-slim-buster
 
 WORKDIR /app
 
-ENV PYTHONDONTWRITTEBYTECODE 1
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV FLASK_APP flask_app.py
-ENV DATABASE_URL 'postgresql://flaskappdb:flaskappdb@localhost/flaskappdb'
+ENV DATABASE_URL 'postgresql://flaskappdb:flaskappdb@localhost/flask_app'
+ENV FLASK_APP 'flask_app.py'
 
 COPY requirements.txt /app/requirements.txt
+
 COPY . /app/
 
 RUN apt-get update && pip install --upgrade pip && \
@@ -20,4 +18,5 @@ RUN apt-get update && pip install --upgrade pip && \
 EXPOSE 5000
 EXPOSE 5432
 
-CMD [ "python3", "flask_app.py"]
+
+CMD ["python", "flask_app.py"]
