@@ -24,6 +24,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    is_admin = BooleanField('Admin Status', default=False, validators=[DataRequired()])
     submit = SubmitField('Register')
 
     def validate_username(self, username):
@@ -61,15 +62,15 @@ class UserFrom(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email")
     first_name = StringField("First Name")
-    last_name = StringField("Lask Name")
+    last_name = StringField("Last Name")
     password = PasswordField("Password", validators=[DataRequired()])
     is_admin = BooleanField("Admin status", default=False)
     submit = SubmitField("Add")
 
 
 class AddQuestionForm(FlaskForm):
-    essence = TextAreaField('Question description', validators=[DataRequired()])
-    supposed_answer = StringField('Answer', validators=[DataRequired()])
+    essence = StringField('Question description', validators=[DataRequired()])
+    supposed_answer = TextAreaField('Answer', validators=[DataRequired()])
     max_grade = IntegerField('Max grade', default=10, validators=[DataRequired()])
     short_description = StringField('Short description', validators=[DataRequired()])
     submit = SubmitField('Add')
@@ -82,7 +83,7 @@ class AddQuestionForm(FlaskForm):
 
 class EditQuestionForm(FlaskForm):
     essence = StringField('Question', validators=[DataRequired()])
-    supposed_answer = StringField('Answer', validators=[DataRequired()])
+    supposed_answer = TextAreaField('Answer', validators=[DataRequired()])
     max_grade = IntegerField('Max Grade', default=10, validators=[DataRequired()])
     short_description = StringField('Short description', validators=[DataRequired()])
     submit = SubmitField('Edit')
@@ -137,15 +138,16 @@ class GradeForm(FlaskForm):
 
 
 class EditGradeForm(FlaskForm):
-    questions = SelectField('Question', coerce=int)
-    interviewers = SelectField('Interviewer', coerce=str)
-    interviews = SelectField('Interview', coerce=int)
+    questions = SelectField('Question', coerce=int, validators=[DataRequired()])
+    interviewers = SelectField('Interviewer', coerce=str, validators=[DataRequired()])
+    interviews = SelectField('Interview', coerce=int, validators=[DataRequired()])
+    grade = SelectField('Grade', coerce=int, choices=[i for i in range(0, 11)])
     submit = SubmitField('Edit')
 
-    @classmethod
-    def new(cls):
-        form = cls()
-        form.interviewers.choices = User.get_selection_list()
-        form.questions.choices = Question.get_selection_list()
-        form.interviews.choices = Interview.get_selection_list()
-        return form
+    # @classmethod
+    # def new(cls, ):
+    #     form = cls()
+    #     form.interviewers.choices = User.get_selection_list()
+    #     form.questions.choices = Question.get_selection_list()
+    #     form.interviews.choices = Interview.get_selection_list()
+    #     return form

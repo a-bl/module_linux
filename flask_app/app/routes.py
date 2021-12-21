@@ -54,7 +54,8 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        user = User(username=form.username.data, first_name=form.first_name.data,
+                    last_name=form.last_name.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -140,8 +141,7 @@ def question(id):
 @login_required
 def edit_question(id):
     q = Question.query.get_or_404(id)
-    grade = Grade.query.filter_by(id=id).all()
-    form = EditQuestionForm(grade)
+    form = EditQuestionForm()
     if form.validate_on_submit():
         q.essence = form.essence.data
         q.supposed_answer = form.supposed_answer.data
@@ -160,7 +160,7 @@ def edit_question(id):
 @app.route('/add_grade', methods=['GET', 'POST'])
 @login_required
 def add_grade():
-    form = GradeForm()
+    form = GradeForm.new()
     if form.validate_on_submit():
         user = User.query.filter_by(id=form.interviewers.data).first()
         question = Question.query.filter_by(id=form.questions.data).first()
@@ -190,20 +190,29 @@ def grade(id):
 @app.route('/edit_grade/<id>', methods=['GET', 'POST'])
 @login_required
 def edit_grade(id):
-    form = EditGradeForm(request.form)
+    g = Grade.query.get_or_404(id)
+    form = EditGradeForm()
     if form.validate_on_submit():
-        request.form.grade = form.grade.data
-        request.form.rater_id = form.rater_id.data
-        request.form.interview_id = form.interview_id.data
-        request.form.question_id = form.question_id.data
+        g.grade = form.grade.data
+        g.interviewer = form.interviewers.data
+        g.interview = form.interviews.data
+        g.question = form.questions.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit_grade'))
+        return redirect(url_for('grades'))
     elif request.method == 'GET':
-        form.grade.data = request.form.grade
-        form.rater_id.data = request.form.rater_id
-        form.interview_id.data = request.form.interview_id
-        form.question_id.data = request.form.question_id
+        form.interviewers.choices = User.get_selection_list()
+        form.interviewers.default = g.interviewer
+
+        form.interviews.choices = Interview.get_selection_list()
+
+        form.questions.choices = Question.get_selection_list()
+        form.questions.default = g.question
+
+        form.grade.data = g.grade
+        # form.interviewers.data = g.interview
+        # form.interviews.data = g.interview
+        # form.questions.data = g.question
     return render_template('edit_grade.html', title='Edit Grade', form=form)
 
 
@@ -220,7 +229,8 @@ def add_interview():
         for interviewer_id in form.interviewers.data:
             user = User.query.filter_by(id=interviewer_id).first()
             interviewers.append(user)
-        interview = Interview(candidate=form.candidate.data, questions=questions, interviewers=interviewers)
+        final_grade = sum(list(map(int, form.questions.data))) / len(form.interviewers.data) / (len(form.questions.data) * 10)
+        interview = Interview(candidate=form.candidate.data, questions=questions, interviewers=interviewers, final_grade=final_grade)
                               # date=form.date.data, start_time=form.start_time.data, end_time=form.end_time.data)
         all = [interview]
         for user in interviewers:

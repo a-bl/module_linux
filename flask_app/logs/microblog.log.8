@@ -1,4 +1,4 @@
-2021-12-19 23:27:58,345 ERROR: Exception on /add_grade [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+2021-12-20 14:22:06,060 ERROR: Exception on /interviews [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -10,8 +10,8 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 174, in add_grade
-    return render_template('add_grade.html', title='Grade', form=form)
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 241, in interviews
+    return render_template('interviews.html', title='Interviews', inws=inws)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 147, in render_template
     return _render(
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
@@ -20,16 +20,20 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 925, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/add_grade.html", line 1, in top-level template code
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/interviews.html", line 1, in top-level template code
     {% extends "base.html" %}
   File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/base.html", line 35, in top-level template code
     {% block content %}{% endblock %}
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/add_grade.html", line 8, in block 'content'
-    {{ form.interview.label }}<br>
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 474, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'app.forms.GradeForm object' has no attribute 'interview'
-2021-12-19 23:28:01,669 ERROR: Exception on /add_interview [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/interviews.html", line 18, in block 'content'
+    <p><a href="{{ url_for('edit_interview') }}">Edit interview</a></p>
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/helpers.py", line 338, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/helpers.py", line 325, in url_for
+    rv = url_adapter.build(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/werkzeug/routing.py", line 2314, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'edit_interview'. Did you mean 'add_interview' instead?
+2021-12-20 14:22:37,697 ERROR: Exception on /interviews [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -41,22 +45,33 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 215, in add_interview
-    if form.validate_on_submit():
-AttributeError: 'NoneType' object has no attribute 'validate_on_submit'
-2021-12-19 23:29:38,591 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-19 23:30:48,294 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-19 23:33:03,101 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-19 23:33:27,422 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-19 23:36:31,675 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-19 23:38:54,482 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-19 23:39:40,326 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-19 23:40:01,675 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-19 23:40:51,730 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-19 23:44:23,240 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-20 09:52:49,968 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-20 09:54:10,971 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-20 09:54:14,904 ERROR: Exception on /users [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 241, in interviews
+    return render_template('interviews.html', title='Interviews', inws=inws)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 147, in render_template
+    return _render(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
+    rv = template.render(context)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 1291, in render
+    self.environment.handle_exception()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/interviews.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/base.html", line 35, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/interviews.html", line 18, in block 'content'
+    {% if interview == request.form %}
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/helpers.py", line 338, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/helpers.py", line 325, in url_for
+    rv = url_adapter.build(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/werkzeug/routing.py", line 2314, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'edit_interview'. Did you mean 'add_interview' instead?
+2021-12-20 14:22:41,813 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 14:25:09,495 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 14:26:43,598 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 14:27:16,138 ERROR: Exception on /grade/11 [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -66,49 +81,40 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 83, in users
-    return render_template('users.html', title='Users', users=users)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 148, in render_template
-    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 1068, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 997, in get_template
-    return self._load_template(name, globals)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 958, in _load_template
-    template = self.loader.load(self, name, self.make_globals(globals))
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/loaders.py", line 125, in load
-    source, filename, uptodate = self.get_source(environment, name)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 59, in get_source
-    return self._get_source_fast(environment, template)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 95, in _get_source_fast
-    raise TemplateNotFound(template)
-jinja2.exceptions.TemplateNotFound: users.html
-2021-12-20 09:54:18,348 ERROR: Exception on /users [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
-Traceback (most recent call last):
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 83, in users
-    return render_template('users.html', title='Users', users=users)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 148, in render_template
-    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 1068, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 997, in get_template
-    return self._load_template(name, globals)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 958, in _load_template
-    template = self.loader.load(self, name, self.make_globals(globals))
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/loaders.py", line 125, in load
-    source, filename, uptodate = self.get_source(environment, name)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 59, in get_source
-    return self._get_source_fast(environment, template)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 95, in _get_source_fast
-    raise TemplateNotFound(template)
-jinja2.exceptions.TemplateNotFound: users.html
-2021-12-20 09:54:47,365 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-20 09:56:08,080 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 187, in grade
+    return render_template('grade.html', grade=g)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 147, in render_template
+    return _render(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
+    rv = template.render(context)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 1291, in render
+    self.environment.handle_exception()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/grade.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/base.html", line 35, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/grade.html", line 12, in block 'content'
+    <p><a href="{{ url_for('edit_grade') }}">Edit grade</a></p>
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/helpers.py", line 338, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/helpers.py", line 325, in url_for
+    rv = url_adapter.build(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/werkzeug/routing.py", line 2314, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'edit_grade'. Did you forget to specify values ['id']?
+2021-12-20 14:27:44,704 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 17:43:40,540 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 17:44:35,905 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 17:45:48,507 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 17:46:07,467 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 17:46:26,295 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 17:53:05,313 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 17:53:21,117 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 17:53:24,453 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 17:53:28,674 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 17:53:34,008 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-20 19:10:51,261 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]

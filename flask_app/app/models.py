@@ -66,8 +66,8 @@ def load_user(id):
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    essence = db.Column(db.Text)
-    supposed_answer = db.Column(db.String(64))
+    essence = db.Column(db.String(64))
+    supposed_answer = db.Column(db.Text)
     max_grade = db.Column(db.Integer)
     short_description = db.Column(db.String(140))
 
