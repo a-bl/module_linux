@@ -1,16 +1,4 @@
-2021-12-20 22:33:28,120 ERROR: Exception on /add_interview [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
-Traceback (most recent call last):
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
-    self.dialect.do_execute(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
-    cursor.execute(statement, parameters)
-psycopg2.errors.UndefinedTable: missing FROM-clause entry for table "question"
-LINE 1: ..., end_time) VALUES ('Aleksandr Zhuk', (3.0 / (2 * question.m...
-                                                             ^
-
-
-The above exception was the direct cause of the following exception:
-
+2021-12-21 19:01:06,604 ERROR: Exception on /edit_grade/22 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -22,61 +10,22 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 234, in add_interview
-    db.session.commit()
-  File "<string>", line 2, in commit
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
-    self._transaction.commit(_to_root=self.future)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 829, in commit
-    self._prepare_impl()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
-    self.session.flush()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3348, in flush
-    self._flush(objects)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3488, in _flush
-    transaction.rollback(_capture_exception=True)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
-    compat.raise_(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
-    raise exception
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3448, in _flush
-    flush_context.execute()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
-    rec.execute(self)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
-    util.preloaded.orm_persistence.save_obj(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
-    _emit_insert_statements(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/persistence.py", line 1215, in _emit_insert_statements
-    result = connection._execute_20(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
-    return meth(self, args_10style, kwargs_10style, execution_options)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
-    return connection._execute_clauseelement(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
-    ret = self._execute_context(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
-    self._handle_dbapi_exception(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
-    util.raise_(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
-    raise exception
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
-    self.dialect.do_execute(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) missing FROM-clause entry for table "question"
-LINE 1: ..., end_time) VALUES ('Aleksandr Zhuk', (3.0 / (2 * question.m...
-                                                             ^
-
-[SQL: INSERT INTO interview (candidate, final_grade, date, start_time, end_time) VALUES (%(candidate)s, (%(param_1)s / (%(max_grade_1)s * question.max_grade)), %(date)s, %(start_time)s, %(end_time)s) RETURNING interview.id]
-[parameters: {'candidate': 'Aleksandr Zhuk', 'param_1': 3.0, 'max_grade_1': 2, 'date': None, 'start_time': None, 'end_time': None}]
-(Background on this error at: https://sqlalche.me/e/14/f405)
-2021-12-20 22:39:04,862 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-20 22:39:18,027 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-20 22:39:59,697 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-20 22:41:58,110 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-20 22:43:28,202 ERROR: Exception on /add_interview [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 218, in edit_grade
+    if form.validate_on_submit():
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_wtf/form.py", line 86, in validate_on_submit
+    return self.is_submitted() and self.validate()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 329, in validate
+    return super().validate(extra)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 146, in validate
+    if not field.validate(self, extra):
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 231, in validate
+    self.pre_validate(form)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/choices.py", line 136, in pre_validate
+    raise TypeError(self.gettext("Choices cannot be None."))
+TypeError: Choices cannot be None.
+2021-12-21 19:11:26,266 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-21 19:13:08,924 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-21 19:13:15,537 ERROR: Exception on /edit_grade/22 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -88,11 +37,24 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 228, in add_interview
-    print(max(list(map(int, max_grades))))
-TypeError: int() argument must be a string, a bytes-like object or a number, not 'Question'
-2021-12-20 22:44:38,581 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-20 22:44:41,652 ERROR: Exception on /add_interview [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 219, in edit_grade
+    if form.validate_on_submit():
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_wtf/form.py", line 86, in validate_on_submit
+    return self.is_submitted() and self.validate()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 329, in validate
+    return super().validate(extra)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 146, in validate
+    if not field.validate(self, extra):
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 231, in validate
+    self.pre_validate(form)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/choices.py", line 136, in pre_validate
+    raise TypeError(self.gettext("Choices cannot be None."))
+TypeError: Choices cannot be None.
+2021-12-21 19:14:28,747 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-21 19:15:18,760 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-21 19:16:17,690 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-21 19:16:40,737 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-21 19:16:49,259 ERROR: Exception on /edit_grade/22 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -104,11 +66,21 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 228, in add_interview
-    print(max(list(map(int, form.questions.max_grade.data))))
-AttributeError: 'SelectMultipleField' object has no attribute 'max_grade'
-2021-12-20 22:46:01,069 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-20 22:46:04,189 ERROR: Exception on /add_interview [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 219, in edit_grade
+    if form.validate_on_submit():
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_wtf/form.py", line 86, in validate_on_submit
+    return self.is_submitted() and self.validate()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 329, in validate
+    return super().validate(extra)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 146, in validate
+    if not field.validate(self, extra):
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 231, in validate
+    self.pre_validate(form)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/choices.py", line 136, in pre_validate
+    raise TypeError(self.gettext("Choices cannot be None."))
+TypeError: Choices cannot be None.
+2021-12-21 19:19:27,457 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-21 19:19:46,278 ERROR: Exception on /edit_grade/22 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -120,7 +92,17 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 228, in add_interview
-    print(max(list(map(int, Question.query.order_by(Question.max_grade).all()))))
-TypeError: int() argument must be a string, a bytes-like object or a number, not 'Question'
-2021-12-20 22:49:57,418 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 219, in edit_grade
+    if form.validate_on_submit():
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_wtf/form.py", line 86, in validate_on_submit
+    return self.is_submitted() and self.validate()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 329, in validate
+    return super().validate(extra)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 146, in validate
+    if not field.validate(self, extra):
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 231, in validate
+    self.pre_validate(form)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/choices.py", line 136, in pre_validate
+    raise TypeError(self.gettext("Choices cannot be None."))
+TypeError: Choices cannot be None.
+2021-12-21 19:21:11,250 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]

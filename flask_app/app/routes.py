@@ -190,7 +190,8 @@ def grade(id):
 @app.route('/edit_grade/<id>', methods=['GET', 'POST'])
 @login_required
 def edit_grade(id):
-    g = Grade.query.get_or_404(id)
+    # g = db.session.query(Grade).get(id)
+    g = Grade.query.filter_by(id=id).first_or_404()
     form = EditGradeForm()
     if form.validate_on_submit():
         g.grade = form.grade.data
@@ -201,13 +202,14 @@ def edit_grade(id):
         flash('Your changes have been saved.')
         return redirect(url_for('grades'))
     elif request.method == 'GET':
-        form.interviewers.choices = User.get_selection_list()
-        form.interviewers.default = g.interviewer
+        form.interviewers.choices = User.query.filter_by(id=g.interviewer_id).all()
+        # form.interviewers.default = g.interviewer
 
-        form.interviews.choices = Interview.get_selection_list()
+        form.interviews.choices = Interview.query.filter_by(id=g.interview_id).all()
+        # form.interviews.default = g.interview
 
-        form.questions.choices = Question.get_selection_list()
-        form.questions.default = g.question
+        form.questions.choices = Question.query.filter_by(id=g.question_id).all()
+        # form.questions.default = g.question
 
         form.grade.data = g.grade
         # form.interviewers.data = g.interview

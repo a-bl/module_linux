@@ -138,9 +138,9 @@ class GradeForm(FlaskForm):
 
 
 class EditGradeForm(FlaskForm):
-    questions = SelectField('Question', coerce=int, validators=[DataRequired()])
+    questions = SelectField('Question', coerce=str, validators=[DataRequired()])
     interviewers = SelectField('Interviewer', coerce=str, validators=[DataRequired()])
-    interviews = SelectField('Interview', coerce=int, validators=[DataRequired()])
+    interviews = SelectField('Interview', coerce=str, validators=[DataRequired()])
     grade = SelectField('Grade', coerce=int, choices=[i for i in range(0, 11)])
     submit = SubmitField('Edit')
 
