@@ -1,25 +1,2 @@
-2021-12-21 19:21:21,588 ERROR: Exception on /edit_grade/20 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
-Traceback (most recent call last):
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 219, in edit_grade
-    if form.validate_on_submit():
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_wtf/form.py", line 86, in validate_on_submit
-    return self.is_submitted() and self.validate()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 329, in validate
-    return super().validate(extra)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 146, in validate
-    if not field.validate(self, extra):
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 231, in validate
-    self.pre_validate(form)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/choices.py", line 136, in pre_validate
-    raise TypeError(self.gettext("Choices cannot be None."))
-TypeError: Choices cannot be None.
+2021-12-23 13:02:41,794 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 13:07:10,808 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]

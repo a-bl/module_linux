@@ -9,6 +9,7 @@
                 <td>
                     <h3>Interview details:</h3>
                     <p><a href="{{ url_for('interview', id=interview.id) }}">View Interview</a></p>
+                    <h4>Candidate: {{ interview }}</h4>
                     <h4>Questions:</h4>
                     {% for question in interview.questions %}
                     <p>{{ question }}</p>

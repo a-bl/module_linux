@@ -17,29 +17,35 @@
         </tr>
     </table>
     <hr>
-     <h3>Your Interviews</h3>
-    <table>
-        <tr valign="top">
-            <td>
-                {% for interview in user.interviews %}
-                <p>Interview ID: {{ interview.id }}</p>
-                <p>Candidate: {{ interview }}</p>
-                <p>Questions:</p>
+    <h3>Your Interviews</h3>
+    <table class="table table-striped table-hover">
+        <thead>
+            <th scope="col">Interview ID</th>
+            <th scope="col">Candidate</th>
+            <th scope="col">Questions</th>
+            <th scope="col">Your Grade</th>
+            <th scope="col">Final Grade</th>
+        </thead>
+        <tbody>
+            {% for interview in user.interviews %}
                 {% for question in interview.questions %}
-                    <p>{{ question }}</p>
+                <tr>
+                    <th scope="row">{{ interview.id }}</th>
+                    <td>{{ interview }}</td>
 
+                    <td>{{ question }}</td>
                     {% for grade in grades %}
                         {% if grade.question_id == question.id  and grade.interviewer_id == user.id and grade.interview_id == interview.id %}
-                            <p>Your Grade: {{ grade.grade }}</p>
-                        {% elif grade.grade == None %}
+                            <td>{{ grade.grade }}</td>
+                            {% elif grade.grade == None %}
                             <a href="http://localhost:5000/add_grade/{{user.username}}/{{question.id}}/{{interview.id}}" class="btn">Add Grade</a>
                         {% endif %}
                     {%endfor %}
+                    <td>{{ interview.final_grade }}</td>
                 {% endfor %}
-                <p>Final Grade: {{ interview.final_grade }}</p>
-            </td>
+                </tr>
             {% endfor %}
-        </tr>
+        </tbody>
     </table>
     <hr>
     <h4>Questions</h4>

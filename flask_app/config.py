@@ -14,11 +14,3 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['flask_reports@protonmail.com']
-
-#####
-# 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
-#     dbuser=os.environ['DBUSER'],
-#     dbpass=os.environ['DBPASS'],
-#     dbhost=os.environ['DBHOST'],
-#     dbname=os.environ['DBNAME']
-# )

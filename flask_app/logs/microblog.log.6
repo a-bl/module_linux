@@ -1,4 +1,4 @@
-2021-12-21 17:37:25,513 ERROR: Exception on /edit_grade/5 [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+2021-12-22 21:09:19,747 ERROR: Exception on /edit_grade/50 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -10,33 +10,11 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 240, in edit_grade
-    return render_template('edit_grade.html', title='Edit Grade', form=form)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 147, in render_template
-    return _render(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
-    rv = template.render(context)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 1291, in render
-    self.environment.handle_exception()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/edit_grade.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/base.html", line 35, in top-level template code
-    {% block content %}{% endblock %}
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/edit_grade.html", line 16, in block 'content'
-    {{ form.interviewers(cols=50, rows=4) }}<br>
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 172, in __call__
-    return self.meta.render_field(self, kwargs)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/meta.py", line 64, in render_field
-    return field.widget(field, **render_kw)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/widgets/core.py", line 351, in __call__
-    for val, label, selected in field.iter_choices():
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/choices.py", line 109, in _choices_generator
-    elif isinstance(choices[0], (list, tuple)):
-TypeError: 'User' object is not subscriptable
-2021-12-21 17:39:08,358 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-21 17:39:38,628 ERROR: Exception on /edit_grade/5 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 241, in edit_grade
+    g.interviewer = request.form.get(interviwers)
+NameError: name 'interviwers' is not defined
+2021-12-22 21:10:32,494 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:10:39,500 ERROR: Exception on /edit_grade/50 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -48,20 +26,11 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 218, in edit_grade
-    if form.validate_on_submit():
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_wtf/form.py", line 86, in validate_on_submit
-    return self.is_submitted() and self.validate()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 329, in validate
-    return super().validate(extra)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 146, in validate
-    if not field.validate(self, extra):
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 231, in validate
-    self.pre_validate(form)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/choices.py", line 136, in pre_validate
-    raise TypeError(self.gettext("Choices cannot be None."))
-TypeError: Choices cannot be None.
-2021-12-21 17:40:18,822 ERROR: Exception on /edit_grade/5 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 241, in edit_grade
+    g.interviewer = int(request.form['interviewers'])
+ValueError: invalid literal for int() with base 10: 'Anastasiia Blyzniuk'
+2021-12-22 21:14:24,217 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:14:29,234 ERROR: Exception on /edit_grade/50 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -73,21 +42,19 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 218, in edit_grade
-    if form.validate_on_submit():
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_wtf/form.py", line 86, in validate_on_submit
-    return self.is_submitted() and self.validate()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 329, in validate
-    return super().validate(extra)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 146, in validate
-    if not field.validate(self, extra):
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 231, in validate
-    self.pre_validate(form)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/choices.py", line 136, in pre_validate
-    raise TypeError(self.gettext("Choices cannot be None."))
-TypeError: Choices cannot be None.
-2021-12-21 17:41:04,303 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-21 17:41:07,521 ERROR: Exception on /edit_grade/5 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 241, in edit_grade
+    g.interviewer = request.form['interviewers']
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 459, in __set__
+    self.impl.set(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 1268, in set
+    value = self.fire_replace_event(state, dict_, value, old, initiator)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 1294, in fire_replace_event
+    value = fn(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 119, in set_
+    newvalue_state = attributes.instance_state(newvalue)
+AttributeError: 'str' object has no attribute '_sa_instance_state'
+2021-12-22 21:15:14,303 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:15:17,957 ERROR: Exception on /edit_grade/50 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -99,18 +66,60 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 221, in edit_grade
-    if form.validate_on_submit():
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_wtf/form.py", line 86, in validate_on_submit
-    return self.is_submitted() and self.validate()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 329, in validate
-    return super().validate(extra)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 146, in validate
-    if not field.validate(self, extra):
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 231, in validate
-    self.pre_validate(form)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/choices.py", line 136, in pre_validate
-    raise TypeError(self.gettext("Choices cannot be None."))
-TypeError: Choices cannot be None.
-2021-12-21 17:41:47,004 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-21 17:42:12,620 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 241, in edit_grade
+    g.interviewer = request.form['interviewers']
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 459, in __set__
+    self.impl.set(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 1268, in set
+    value = self.fire_replace_event(state, dict_, value, old, initiator)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 1294, in fire_replace_event
+    value = fn(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 119, in set_
+    newvalue_state = attributes.instance_state(newvalue)
+AttributeError: 'str' object has no attribute '_sa_instance_state'
+2021-12-22 21:16:04,865 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:17:02,292 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:17:23,834 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:17:45,171 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:18:05,293 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:18:27,542 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:18:39,291 ERROR: Exception on /edit_grade/50 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+Traceback (most recent call last):
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 241, in edit_grade
+    g.interviewer = request.form['interviewers']
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 459, in __set__
+    self.impl.set(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 1268, in set
+    value = self.fire_replace_event(state, dict_, value, old, initiator)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 1294, in fire_replace_event
+    value = fn(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 119, in set_
+    newvalue_state = attributes.instance_state(newvalue)
+AttributeError: 'str' object has no attribute '_sa_instance_state'
+2021-12-22 21:23:01,613 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:23:08,938 ERROR: Exception on /edit_grade/50 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+Traceback (most recent call last):
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 238, in edit_grade
+    g.standard.docs.insert({
+AttributeError: 'Grade' object has no attribute 'standard'
+2021-12-22 21:25:58,233 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]

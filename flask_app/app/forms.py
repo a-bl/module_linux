@@ -138,16 +138,16 @@ class GradeForm(FlaskForm):
 
 
 class EditGradeForm(FlaskForm):
-    questions = SelectField('Question', coerce=str, validators=[DataRequired()])
-    interviewers = SelectField('Interviewer', coerce=str, validators=[DataRequired()])
-    interviews = SelectField('Interview', coerce=str, validators=[DataRequired()])
+    questions = StringField('Question', validators=[DataRequired()])
+    interviewers = StringField('Interviewer', validators=[DataRequired()])
+    interviews = StringField('Interview', validators=[DataRequired()])
     grade = SelectField('Grade', coerce=int, choices=[i for i in range(0, 11)])
     submit = SubmitField('Edit')
 
-    # @classmethod
-    # def new(cls, ):
-    #     form = cls()
-    #     form.interviewers.choices = User.get_selection_list()
-    #     form.questions.choices = Question.get_selection_list()
-    #     form.interviews.choices = Interview.get_selection_list()
-    #     return form
+    @classmethod
+    def new(cls, ):
+        form = cls()
+        form.interviewers.choices = User.get_selection_list()
+        form.questions.choices = Question.get_selection_list()
+        form.interviews.choices = Interview.get_selection_list()
+        return form

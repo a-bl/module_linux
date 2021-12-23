@@ -6,28 +6,28 @@
         {{ form.hidden_tag() }}
         <p>
             {{ form.interviews.label }}<br>
-            {{ form.interviews(size=32) }}<br>
+            {{ form.interviews(size=1) }}<br>
             {% for error in form.interviews.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.questions.label }}<br>
-            {{ form.questions(size=64) }}<br>
+            {{ form.questions(size=1) }}<br>
             {% for error in form.questions.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.interviewers.label }}<br>
-            {{ form.interviewers(size=32) }}<br>
+            {{ form.interviewers(size=1) }}<br>
             {% for error in form.interviewers.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.grade.label }}<br>
-            {{ form.grade(size=32) }}<br>
+            {{ form.grade(size=1) }}<br>
             {% for error in form.grade.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}

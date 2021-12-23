@@ -1,4 +1,8 @@
-2021-12-21 17:26:26,769 ERROR: Exception on /edit_grade/5 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+2021-12-22 20:29:50,178 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:30:17,186 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:30:39,076 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:31:03,674 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:31:06,969 ERROR: Exception on /user/romanrom [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -10,27 +14,17 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 219, in edit_grade
-    if form.validate_on_submit():
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_wtf/form.py", line 86, in validate_on_submit
-    return self.is_submitted() and self.validate()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 329, in validate
-    return super().validate(extra)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 146, in validate
-    if not field.validate(self, extra):
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 231, in validate
-    self.pre_validate(form)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/choices.py", line 136, in pre_validate
-    raise TypeError(self.gettext("Choices cannot be None."))
-TypeError: Choices cannot be None.
-2021-12-21 17:28:38,360 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-21 17:29:38,344 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-21 17:30:32,443 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-21 17:31:15,943 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-21 17:33:02,057 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-21 17:33:37,111 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-21 17:33:54,627 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-21 17:33:56,961 ERROR: Exception on /edit_grade/5 [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 99, in user
+    for grade in grades:
+TypeError: 'Grade' object is not iterable
+2021-12-22 20:31:39,778 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:32:16,131 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:32:33,028 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:32:53,749 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:33:22,166 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:33:42,076 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:49:19,423 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:49:22,440 ERROR: Exception on /user/romanrom [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -42,33 +36,38 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 240, in edit_grade
-    return render_template('edit_grade.html', title='Edit Grade', form=form)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 147, in render_template
-    return _render(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
-    rv = template.render(context)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 1291, in render
-    self.environment.handle_exception()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/edit_grade.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/base.html", line 35, in top-level template code
-    {% block content %}{% endblock %}
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/edit_grade.html", line 16, in block 'content'
-    {{ form.interviewers(cols=50, rows=4) }}<br>
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 172, in __call__
-    return self.meta.render_field(self, kwargs)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/meta.py", line 64, in render_field
-    return field.widget(field, **render_kw)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/widgets/core.py", line 351, in __call__
-    for val, label, selected in field.iter_choices():
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/choices.py", line 109, in _choices_generator
-    elif isinstance(choices[0], (list, tuple)):
-TypeError: 'User' object is not subscriptable
-2021-12-21 17:37:07,264 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-21 17:37:10,319 ERROR: Exception on /edit_grade/5 [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 97, in user
+    grades = Grade.query.filter_by(interview=interview.id).all()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 1793, in filter_by
+    clauses = [
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 1794, in <listcomp>
+    _entity_namespace_key(from_entity, key) == value
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/sql/operators.py", line 360, in __eq__
+    return self.operate(eq, other)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 317, in operate
+    return op(self.comparator, *other, **kwargs)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/relationships.py", line 1317, in __eq__
+    self.property._optimized_compare(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/relationships.py", line 1705, in _optimized_compare
+    raise sa_exc.ArgumentError(
+sqlalchemy.exc.ArgumentError: Mapped instance expected for relationship comparison to object.   Classes, queries and other SQL elements are not accepted in this context; for comparison with a subquery, use Grade.interview.has(**criteria).
+2021-12-22 20:49:44,139 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:50:01,449 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:51:54,139 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:52:13,813 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:52:28,599 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:52:59,615 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:53:16,941 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:53:30,307 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:53:40,947 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:58:12,253 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:59:06,277 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 20:59:49,579 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:00:16,792 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:02:03,885 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:02:42,431 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:03:18,235 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:03:24,642 ERROR: Exception on /edit_grade/50 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -80,17 +79,32 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 217, in edit_grade
-    form = EditGradeForm(g)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 208, in __call__
-    return type.__call__(cls, *args, **kwargs)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_wtf/form.py", line 73, in __init__
-    super().__init__(formdata=formdata, **kwargs)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 286, in __init__
-    self.process(formdata, obj, data=data, **kwargs)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/form.py", line 127, in process
-    field.process(formdata, data, extra_filters=field_extra_filters)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/wtforms/fields/core.py", line 322, in process
-    if self.name in formdata:
-TypeError: argument of type 'Grade' is not iterable
-2021-12-21 17:37:23,661 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 241, in edit_grade
+    g.interviewer = request.form['interviewers']
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 459, in __set__
+    self.impl.set(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 1268, in set
+    value = self.fire_replace_event(state, dict_, value, old, initiator)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/attributes.py", line 1294, in fire_replace_event
+    value = fn(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 119, in set_
+    newvalue_state = attributes.instance_state(newvalue)
+AttributeError: 'str' object has no attribute '_sa_instance_state'
+2021-12-22 21:07:09,471 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:08:02,210 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-22 21:08:08,061 ERROR: Exception on /edit_grade/50 [POST] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+Traceback (most recent call last):
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 241, in edit_grade
+    g.interviewer = request.form.interviewers
+AttributeError: 'ImmutableMultiDict' object has no attribute 'interviewers'
+2021-12-22 21:09:14,699 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]

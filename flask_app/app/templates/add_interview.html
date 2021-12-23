@@ -13,15 +13,14 @@
         </p>
         <p>
             {{ form.questions.label }}<br>
-            {{ form.questions(size=64) }}<br>
+            {{ form.questions(columns=1, rows=1) }}<br>
             {% for error in form.questions.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-
         <p>
             {{ form.interviewers.label }}<br>
-            {{ form.interviewers(size=32) }}<br>
+            {{ form.interviewers(columns=1, rows=1) }}<br>
             {% for error in form.interviewers.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
