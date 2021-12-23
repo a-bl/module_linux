@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block content %}
     <table>
         <tr valign="top">
@@ -16,4 +17,43 @@
         </tr>
     </table>
     <hr>
+     <h3>Your Interviews</h3>
+    <table>
+        <tr valign="top">
+            <td>
+                {% for interview in user.interviews %}
+                <p>Interview ID: {{ interview.id }}</p>
+                <p>Candidate: {{ interview }}</p>
+                <p>Questions:</p>
+                {% for question in interview.questions %}
+                    <p>{{ question }}</p>
+
+                    {% for grade in grades %}
+                        {% if grade.question_id == question.id  and grade.interviewer_id == user.id and grade.interview_id == interview.id %}
+                            <p>Your Grade: {{ grade.grade }}</p>
+                        {% elif grade.grade == None %}
+                            <a href="http://localhost:5000/add_grade/{{user.username}}/{{question.id}}/{{interview.id}}" class="btn">Add Grade</a>
+                        {% endif %}
+                    {%endfor %}
+                {% endfor %}
+                <p>Final Grade: {{ interview.final_grade }}</p>
+            </td>
+            {% endfor %}
+        </tr>
+    </table>
+    <hr>
+    <h4>Questions</h4>
+    <table>
+        {% for question in questions %}
+        <tr valign="top">
+
+            <td>
+                <p>Question: {{ question.essence }}</p>
+            </td>
+            <td>
+                <p>Answer: {{ question.supposed_answer }}</p>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
