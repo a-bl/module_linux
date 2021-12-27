@@ -17,7 +17,7 @@
 
           <a class="btn btn-outline-light me-2" href="{{ url_for('index') }}" role="button">Home</a>
             {% if current_user.is_anonymous %}
-            <a class="btn btn-outline-light me-2" href="{{ url_for('login') }}" role="button">Login</a>
+            <a class="btn btn-outline-light me-2" href="{{ url_for('login_route') }}" role="button">Login</a>
             {% else %}
             <a class="btn btn-outline-light me-2" href="{{ url_for('user', username=current_user.username) }}" role="button">Profile</a>
             {% if current_user.is_admin %}
@@ -26,7 +26,7 @@
             <a class="btn btn-outline-light me-2" href="{{ url_for('grades') }}" role="button">Grades</a>
             <a class="btn btn-outline-light me-2" href="{{ url_for('interviews') }}" role="button">Interviews</a>
             {% endif %}
-            <a class="btn btn-outline-light me-2" href="{{ url_for('logout') }}" role="button">Logout</a>
+            <a class="btn btn-outline-light me-2" href="{{ url_for('logout_route') }}" role="button">Logout</a>
                 {% endif %}
         </header>
         {% with messages = get_flashed_messages() %}

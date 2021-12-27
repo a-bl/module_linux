@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
-from app import app, db
+from app import app, db, login
 from app.forms import LoginForm, RegistrationForm
 from app.models import User, Interview, Question, Grade
 from app.forms import EditProfileForm, AddQuestionForm, EditQuestionForm, GradeForm, EditGradeForm, \
@@ -25,7 +25,7 @@ def index():
 
 
 @app.route('/login', methods=['GET', 'POST'])
-def login():
+def login_route():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = LoginForm()
@@ -33,7 +33,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
-            return redirect(url_for('login'))
+            return redirect(url_for('login_route'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
@@ -43,13 +43,18 @@ def login():
 
 
 @app.route('/logout')
-def logout():
+def logout_route():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login_route'))
+
+
+@login.unauthorized_handler
+def unauthorized_callback():
+    return redirect(url_for('login_route'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
-def register():
+def register_route():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = RegistrationForm()
@@ -60,7 +65,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('login'))
+        return redirect(url_for('login_route'))
     return render_template('register.html', title='Register', form=form)
 
 

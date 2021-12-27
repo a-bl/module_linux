@@ -26,10 +26,10 @@ interviews_question = db.Table('interviews_question',
                                db.Column('question_id', db.Integer, db.ForeignKey('question.id'), primary_key=True)
                                )
 
-users_question = db.Table('users_question',
-                          db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-                          db.Column('question_id', db.Integer, db.ForeignKey('question.id'), primary_key=True)
-                          )
+# users_question = db.Table('users_question',
+#                           db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+#                           db.Column('question_id', db.Integer, db.ForeignKey('question.id'), primary_key=True)
+#                           )
 
 
 class User(UserMixin, db.Model):
@@ -42,8 +42,8 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     is_admin = db.Column(db.Boolean(False))
-    questions = db.relationship('Question', secondary=users_question, lazy='subquery',
-                                backref=db.backref('interviewers', lazy=True))
+    # questions = db.relationship('Question', secondary=users_question, lazy='subquery',
+    #                             backref=db.backref('interviewers', lazy=True))
 
     def __repr__(self):
         return f'{self.first_name} {self.last_name}'

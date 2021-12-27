@@ -1,83 +1,9 @@
-2021-12-23 12:17:30,446 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:18:13,561 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:19:12,671 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:20:52,225 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:21:46,146 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:22:19,140 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:23:03,524 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:25:07,813 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:26:09,248 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:26:33,620 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:27:45,588 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:27:47,389 ERROR: Exception on /user/ablyzniuk [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
-Traceback (most recent call last):
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 114, in user
-    return render_template('user.html', user=user, grades=grs, questions=questions)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 147, in render_template
-    return _render(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
-    rv = template.render(context)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 1291, in render
-    self.environment.handle_exception()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/user.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/base.html", line 38, in top-level template code
-    {% block content %}{% endblock %}
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/user.html", line 21, in block 'content'
-    <table class="table" title="{{ interview.id }}">
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 474, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'interview' is undefined
-2021-12-23 12:28:10,369 ERROR: Exception on /user/ablyzniuk [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
-Traceback (most recent call last):
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 114, in user
-    return render_template('user.html', user=user, grades=grs, questions=questions)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 147, in render_template
-    return _render(
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
-    rv = template.render(context)
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 1291, in render
-    self.environment.handle_exception()
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/user.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/base.html", line 38, in top-level template code
-    {% block content %}{% endblock %}
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/user.html", line 21, in block 'content'
-    {% for interview in user.interviews %}
-  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 474, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'interview' is undefined
-2021-12-23 12:28:17,043 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:29:28,982 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:30:29,207 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:31:07,795 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:31:37,405 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:32:14,462 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
-2021-12-23 12:32:16,593 ERROR: Exception on /user/ablyzniuk [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+2021-12-23 12:43:01,002 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:43:23,417 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:43:47,097 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:44:06,346 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:46:58,747 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:47:01,161 ERROR: Exception on /user/ablyzniuk [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
 Traceback (most recent call last):
   File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -105,7 +31,83 @@ Traceback (most recent call last):
     self.handle_exception(source=source_hint)
   File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 925, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/user.html", line 91, in template
-    {% endblock %}
-jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endblock'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor' or 'else'. The innermost block that needs to be closed is 'for'.
-2021-12-23 12:32:37,608 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/user.html", line 74, in template
+    <!--        {% endfor %}-->
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2021-12-23 12:47:17,984 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:47:50,633 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:48:11,678 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:48:36,710 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:48:52,750 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:49:50,581 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:50:46,867 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:51:39,616 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:52:34,122 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:53:48,826 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:54:11,445 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:54:50,091 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 12:55:17,930 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 13:01:03,193 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 13:01:07,637 ERROR: Exception on /user/ablyzniuk [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+Traceback (most recent call last):
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 114, in user
+    return render_template('user.html', user=user, grades=grs, questions=questions)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 148, in render_template
+    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 1068, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 997, in get_template
+    return self._load_template(name, globals)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 958, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/loaders.py", line 137, in load
+    code = environment.compile(source, name, filename)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 757, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/user.html", line 42, in template
+    {% endfor %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2021-12-23 13:01:24,801 INFO: Microblog startup [in /home/anastasiia/projects/softserve_internship/flask_app/app/__init__.py:47]
+2021-12-23 13:01:26,667 ERROR: Exception on /user/ablyzniuk [GET] [in /home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py:1457]
+Traceback (most recent call last):
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/routes.py", line 114, in user
+    return render_template('user.html', user=user, grades=grs, questions=questions)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 147, in render_template
+    return _render(
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
+    rv = template.render(context)
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 1291, in render
+    self.environment.handle_exception()
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/user.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/base.html", line 38, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/anastasiia/projects/softserve_internship/flask_app/app/templates/user.html", line 24, in block 'content'
+    <p>Interview ID: {{ interview.id }}</p>
+  File "/home/anastasiia/.local/lib/python3.8/site-packages/jinja2/environment.py", line 474, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'interview' is undefined
