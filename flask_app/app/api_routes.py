@@ -279,12 +279,16 @@ class LoginApi(Resource):
     def post(self):
         form = LoginForm(data=request.form)
         user = User.query.filter_by(username=form.username.data).first()
-        if User.query.filter_by(username=form.username.data).first():
-            if user.get_password(form.password.data):
-                login_user(user)
-                return {"login": "success"}
-            return {"error": "invalid password"}
-        return {"error": "invalid username"}
+        if user is None or not user.check_password(form.password.data):
+            return {"error": "Invalid username or password"}
+        login_user(user, remember=form.remember_me.data)
+        return {"login": "success"}
+        # if User.query.filter_by(username=form.username.data).first():
+        #     if user.get_password(form.password.data):
+        #         login_user(user)
+        #         return {"login": "success"}
+        #     return {"error": "invalid password"}
+        # return {"error": "invalid username"}
 
 
 class LogoutApi(Resource):

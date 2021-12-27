@@ -13,7 +13,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     is_admin = BooleanField('Admin Status', default=False)
     remember_me = BooleanField('Remember Me')
-    # submit = SubmitField('Sign In')
+    submit = SubmitField('Sign In')
 
 
 class RegistrationForm(FlaskForm):

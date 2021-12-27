@@ -21,7 +21,8 @@
                     {% endfor %}
                 </p>
                 <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-                <button type="submit" class="btn btn-outline-dark">Submit</button>
+                <p>{{ form.submit() }}</p>
+<!--                <button type="submit" class="btn btn-outline-dark">Submit</button>-->
             </form>
             <br>
             <p>New User? <a class="btn btn-outline-dark me-2" href="{{ url_for('register_route') }}" role="button">Click to Register!</a></p>

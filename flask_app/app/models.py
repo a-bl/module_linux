@@ -97,7 +97,7 @@ class Interview(db.Model):
                                 backref=db.backref('interviews', lazy=True))
     interviewers = db.relationship('User', secondary=users_interview, lazy='subquery',
                                    backref=db.backref('interviews', lazy=True))
-    final_grade = db.Column(db.Float(precision=2))
+    final_grade = db.Column(db.Float(precision=2), default=0)
     date = db.Column(db.Date)
     start_time = db.Column(db.Time)
     end_time = db.Column(db.Time)
