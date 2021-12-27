@@ -8,7 +8,7 @@
                     <p>Question: {{ grade.question }}</p>
                     <p>Interviewer: {{ grade.interviewer }}</p>
                     <p>Grade: {{ grade.grade }}</p>
-                    <p><a href="{{ url_for('edit_grade', id=grade.id) }}">Edit grade</a></p>
+                    <p><a class="btn btn-outline-dark me-2" role="button" href="{{ url_for('edit_grade', id=grade.id) }}">Edit grade</a></p>
                 </td>
             </tr>
         </table>

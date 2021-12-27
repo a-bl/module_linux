@@ -106,12 +106,19 @@ def user(username):
             for question in interview.questions:
                 return redirect(url_for('add_grade', username=user.username, question_id=question.id, interview_id=interview.id))
 
+    for q in questions:
+        grades = Grade.query.filter_by(question_id=q.id).all()
+        if len(grades) != 0:
+            max_grade = max([grade.grade for grade in grades])
+            q.max_grade = max_grade
+            db.session.commit()
+
     # interview = Interview.query.first()
     # interview.final_grade = final_grade
     # print(interview, interview.final_grade)
     # db.session.commit()
     # print(interview.final_grade)
-    return render_template('user.html', user=user, grades=grs, questions=questions)
+    return render_template('user.html', title='Profile', user=user, grades=grs, questions=questions)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -138,7 +145,7 @@ def add_question():
     form = AddQuestionForm()
     if form.validate_on_submit():
         _question = Question(essence=form.essence.data, supposed_answer=form.supposed_answer.data,
-                             max_grade=form.max_grade.data, short_description=form.short_description.data)
+                             max_grade=0, short_description=form.short_description.data)
         db.session.add(_question)
         db.session.commit()
         flash('Congratulations, you have just created a new question!')

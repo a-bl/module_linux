@@ -1,22 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Grades</h1>
-    <p><a href="{{ url_for('add_grade') }}">Add new grade</a></p>
-    {% for grade in gs %}
-        <table>
+    {% if current_user.is_admin %}
+    <p><a class="btn btn-outline-dark me-2" role="button" href="{{ url_for('add_grade') }}">Add new grade</a></p>
+    {% endif %}
+
+        <table class="table table-light table-striped caption-top">
+            <caption><h4>Grades</h4></caption>
+            {% for grade in gs %}
             <tr valign="top">
                 <td>
                     <p>Interview candidate: {{ grade.interview }}</p>
                     <p>Question: {{ grade.question }}</p>
                     <p>Interviewer: {{ grade.interviewer }}</p>
                     <p>Grade: {{ grade.grade }}</p>
-                    <p><a href="{{ url_for('grade', id=grade.id) }}">View Grade</a></p>
-                    {% if grade == request.form %}
-                    <p><a href="{{ url_for('edit_grade') }}">Edit grade</a></p>
-                    {% endif %}
+                    <p><a class="btn btn-outline-dark me-2" role="button" href="{{ url_for('grade', id=grade.id) }}">View Grade</a></p>
                 </td>
             </tr>
+            {% endfor %}
         </table>
-    {% endfor %}
+
 {% endblock %}

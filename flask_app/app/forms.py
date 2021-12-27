@@ -13,7 +13,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     is_admin = BooleanField('Admin Status', default=False)
     remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
+    # submit = SubmitField('Sign In')
 
 
 class RegistrationForm(FlaskForm):
@@ -71,7 +71,7 @@ class UserFrom(FlaskForm):
 class AddQuestionForm(FlaskForm):
     essence = StringField('Question description', validators=[DataRequired()])
     supposed_answer = TextAreaField('Answer', validators=[DataRequired()])
-    max_grade = IntegerField('Max grade', default=10, validators=[DataRequired()])
+    # max_grade = IntegerField('Max grade', default=10, validators=[DataRequired()])
     short_description = StringField('Short description', validators=[DataRequired()])
     submit = SubmitField('Add')
 

@@ -9,7 +9,7 @@
                 <p>Max grade: {{ question.max_grade }}</p>
                 <p>Short description: {{ question.short_description }}</p>
 
-                <p><a href="{{ url_for('edit_question', id=question.id) }}">Edit question</a></p>
+                <p><a class="btn btn-outline-dark me-2" role="button" href="{{ url_for('edit_question', id=question.id) }}">Edit question</a></p>
 
             </td>
         </tr>

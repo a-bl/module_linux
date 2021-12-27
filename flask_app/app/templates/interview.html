@@ -15,9 +15,6 @@
                     <p>{{ user }}</p>
                     {% endfor %}
                     <h4>Final Grade: {{ interview.final_grade }}</h4>
-                    {% if grade == request.form %}
-                    <p><a href="{{ url_for('edit_interview') }}">Edit interview</a></p>
-                    {% endif %}
                 </td>
             </tr>
         </table>
