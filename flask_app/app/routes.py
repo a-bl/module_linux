@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
-from app import app, db, login
+from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from app.models import User, Interview, Question, Grade
 from app.forms import EditProfileForm, AddQuestionForm, EditQuestionForm, GradeForm, EditGradeForm, \
@@ -48,9 +48,9 @@ def logout_route():
     return redirect(url_for('login_route'))
 
 
-@login.unauthorized_handler
-def unauthorized_callback():
-    return redirect(url_for('login_route'))
+# @login.unauthorized_handler
+# def unauthorized_callback():
+#     return redirect(url_for('login_route'))
 
 
 @app.route('/register', methods=['GET', 'POST'])

@@ -2,7 +2,7 @@ from flask import jsonify, request
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_restful import Resource
 
-from app import db
+from app import db, api
 from app.forms import LoginForm
 from app.models import User, Question, Interview, Grade
 from app.schema import UserSchema, QuestionSchema, InterviewSchema, GradeSchema
@@ -62,6 +62,8 @@ class MainResource(Resource):
             return {"error": "you are not admin"}
         form = request.form
         model_object = self.create_object(form=form)
+        if isinstance(model_object, dict):
+            return model_object
         db.session.add(model_object)
         db.session.commit()
         return {'result': 'done'}
@@ -102,7 +104,7 @@ class UserApi(MainResource):
     def create_object(self, form):
         user = User()
         if not form.get("username") or not form.get("password"):
-            raise Exception("no username or password")
+            return {"error": "no username and/or password"}
         user = self.edit_object(user, form)
         return user
 
@@ -144,7 +146,7 @@ class GradesApi(MainResource):
     def create_object(self, form):
         grade = Grade()
         if not form.get("interview_id") or not form.get("interviewer_id") or not form.get("question_id"):
-            raise Exception("no")
+            return {"error": "interview_id, interviewer_id or question_id is absent"}
         grade = self.edit_object(grade=grade, form=form)
         return grade
 
@@ -172,45 +174,36 @@ class InterviewApi(MainResource):
             interview.interview_id = form.get('interview_id')
         if form.get("final_grade"):
             interview.result_grade = form.get('final_grade')
+
+        if form.get("add_questions_row_id"):
+            questions_id = form.get("add_questions_row_id").split(",")
+            for question_id in questions_id:
+                if Question.query.filter_by(id=int(question_id)).first():
+                    question = Question.query.filter_by(id=int(question_id)).first()
+                    interview.question_list.append(question)
+        if form.get("add_interviewers_row_id"):
+            interviewers_id = form.get("add_interviewers_row_id").split(",")
+            for interviewer_id in interviewers_id:
+                if User.query.filter_by(id=int(interviewer_id)).first():
+                    interviewer = User.query.filter_by(id=int(interviewer_id)).first()
+                    interview.interviewers.append(interviewer)
+
         if form.get('add_question_id'):
             if Question.query.filter_by(id=int(form.get('add_question_id'))).first() not in interview.questions:
-                interview.questions.append(Question.query.filter_by(id=int(form.get('add_question_id'))).first())
-                for interviewer in interview.interviewers:
-                    db.session.add(Grade(
-                        question=Question.query.filter_by(id=int(form.get('add_question_id'))).first(),
-                        interviewer=interviewer,
-                        interview=interview
-                    ))
+                question = Question.query.filter_by(id=int(form.get('add_question_id'))).first()
+                interview.questions.append(question)
         if form.get('exclude_question_id'):
             if Question.query.filter_by(id=int(form.get('exclude_question_id'))).first() in interview.questions:
-                for interviewer in interview.interviewers:
-                    grade = Grade.query.filter_by(
-                        question=Question.query.filter_by(id=int(form.get('exclude_question_id'))).first(),
-                        interviewer=interviewer,
-                        interview=interview
-                    ).first()
-                    db.session.delete(grade)
-                interview.question_list.remove(
-                    Question.query.filter_by(id=int(form.get('exclude_question_id'))).first())
+                question = Question.query.filter_by(id=int(form.get('exclude_question_id'))).first()
+                interview.questions.remove(question)
         if form.get('add_interviewer_id'):
             if User.query.filter_by(id=int(form.get('add_interviewer_id'))).first() not in interview.interviewers:
-                interview.interviewers.append(User.query.filter_by(id=int(form.get('add_interviewer_id'))).first())
-                for question in interview.questions:
-                    db.session.add(Grade(
-                        question=question,
-                        interviewer=User.query.filter_by(id=int(form.get('add_interviewer_id'))).first(),
-                        interview=interview
-                    ))
+                interviewer = User.query.filter_by(id=int(form.get('add_interviewer_id'))).first()
+                interview.interviewers.append(interviewer)
         if form.get('exclude_interviewer_id'):
             if User.query.filter_by(id=int(form.get('exclude_interviewer_id'))).first() in interview.interviewers:
-                for question in interview.questions:
-                    grade = Grade.query.filter_by(
-                        question=question,
-                        interviewer=User.query.filter_by(id=int(form.get('exclude_interviewer_id'))).first(),
-                        interview=interview
-                    ).first()
-                    db.session.delete(grade)
-                interview.interviewers.remove(User.query.filter_by(id=int(form.get('exclude_interviewer_id'))).first())
+                interviewer = User.query.filter_by(id=int(form.get('exclude_interviewer_id'))).first()
+                interview.interviewers.remove(interviewer)
         return interview
 
     def get_schema(self):
@@ -218,21 +211,9 @@ class InterviewApi(MainResource):
 
     def create_object(self, form):
         interview = Interview()
-        if not form.get("candidate"):
-            raise Exception("no")
+        if not form.get('candidate'):
+            return {"error": "no candidate"}
         interview = self.edit_object(interview, form)
-        if interview.questions:
-            if interview.interviewers:
-                objects = []
-                for interviewer in interview.interviewers:
-                    for question in interview.questions:
-                        grade = Grade(
-                            question=question,
-                            interviewer=interviewer,
-                            interview=interview
-                        )
-                        objects.append(grade)
-                db.session.add_all(objects)
         return interview
 
 
@@ -268,8 +249,8 @@ class QuestionApi(MainResource):
 
     def create_object(self, form):
         question = Question()
-        if not form.get('candidate'):
-            raise Exception("no candidate")
+        # if not form.get('candidate'):
+        #     raise Exception("no candidate")
         question = self.edit_object(question, form)
         return question
 
@@ -279,6 +260,7 @@ class LoginApi(Resource):
     def post(self):
         form = LoginForm(data=request.form)
         user = User.query.filter_by(username=form.username.data).first()
+        print("I'm here")
         if user is None or not user.check_password(form.password.data):
             return {"error": "Invalid username or password"}
         login_user(user, remember=form.remember_me.data)
@@ -297,3 +279,11 @@ class LogoutApi(Resource):
     def post(self):
         logout_user()
         return {"logout": "success"}
+
+
+api.add_resource(UserApi, '/api/user')
+api.add_resource(GradesApi, '/api/grade')
+api.add_resource(QuestionApi, '/api/question')
+api.add_resource(InterviewApi, '/api/interview')
+api.add_resource(LoginApi, '/api/login')
+api.add_resource(LogoutApi, '/api/logout')

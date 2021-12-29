@@ -40,7 +40,7 @@ class QuestionSchema(ma.SQLAlchemyAutoSchema):
     essence = fields.Str(required=True)
     supposed_answer = fields.Str(required=True, validate=validate.Length(64))
     max_grade = fields.Int(required=True)
-    short_description = fields.Str(required=True, validate=validate.Length(128))
+    short_description = fields.Str(required=True, validate=validate.Length(140))
 
 
 class InterviewSchema(ma.SQLAlchemyAutoSchema):
