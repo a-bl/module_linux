@@ -2,14 +2,14 @@ import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_login import LoginManager, current_user
 from config import Config
-from flask_marshmallow import Marshmallow
 from flask_restful import Api
 from flask_admin import Admin
 from flask_admin.contrib import sqla
+from flask_migrate import Migrate
+from flask_marshmallow import Marshmallow
+from flask_login import LoginManager, current_user
+from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)

@@ -104,12 +104,12 @@ def user(username):
         for grade in grades:
             gs.append(grade.grade)
         if len(gs) != 0:
-            final_grade = sum(gs) / len(interview.interviewers) / (len(gs) * 10)
+            final_grade = sum(gs) / len(interview.interviewers) / (len(gs)/2 * 10)
             interview.final_grade = final_grade
             db.session.commit()
-        else:
-            for question in interview.questions:
-                return redirect(url_for('add_grade', username=user.username, question_id=question.id, interview_id=interview.id))
+        # else:
+        #     for question in interview.questions:
+        #         return redirect(url_for('add_grade', username=user.username, question_id=question.id, interview_id=interview.id))
 
     for q in questions:
         grades = Grade.query.filter_by(question_id=q.id).all()
