@@ -181,13 +181,24 @@ class InterviewApi(MainResource):
                 if Question.query.filter_by(id=int(question_id)).first():
                     question = Question.query.filter_by(id=int(question_id)).first()
                     interview.question_list.append(question)
+        if form.get("exclude_questions_row_id"):
+            questions_id = form.get("exclude_questions_row_id").split(",")
+            for question_id in questions_id:
+                if Question.query.filter_by(id=int(question_id)).first():
+                    question = Question.query.filter_by(id=int(question_id)).first()
+                    interview.questions.remove(question)
         if form.get("add_interviewers_row_id"):
             interviewers_id = form.get("add_interviewers_row_id").split(",")
             for interviewer_id in interviewers_id:
                 if User.query.filter_by(id=int(interviewer_id)).first():
                     interviewer = User.query.filter_by(id=int(interviewer_id)).first()
                     interview.interviewers.append(interviewer)
-
+        if form.get("exclude_interviewers_row_id"):
+            interviewers_id = form.get("exclude_interviewers_row_id").split(",")
+            for interviewer_id in interviewers_id:
+                if User.query.filter_by(id=int(interviewer_id)).first():
+                    interviewer = User.query.filter_by(id=int(interviewer_id)).first()
+                    interview.interviewers.remove(interviewer)
         if form.get('add_question_id'):
             if Question.query.filter_by(id=int(form.get('add_question_id'))).first() not in interview.questions:
                 question = Question.query.filter_by(id=int(form.get('add_question_id'))).first()

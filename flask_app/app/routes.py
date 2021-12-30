@@ -17,6 +17,11 @@ def before_request():
 
 
 @app.route('/')
+@login_required
+def admin_page():
+    return redirect('/admin')
+
+
 @app.route('/index')
 @login_required
 def index():

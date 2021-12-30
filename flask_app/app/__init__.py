@@ -1,13 +1,14 @@
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
-from flask import Flask
+from flask import Flask, redirect
 from config import Config
 from flask_restful import Api
 from flask_admin import Admin
+from flask_admin.contrib import sqla
 from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -21,7 +22,7 @@ login.init_app(app)
 ma = Marshmallow(app)
 api = Api()
 app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
-admin = Admin(app, name='interview', template_mode='bootstrap3')
+admin = Admin(app, name='Interview Platform', template_mode='bootstrap3')
 
 if not app.debug:
     if app.config['MAIL_SERVER']:
@@ -54,14 +55,15 @@ if not app.debug:
 
 @login.unauthorized_handler
 def unauthorized_callback():
-    return {"error": "you need to login first"}
+    # return {"error": "you need to login first"}
+    return redirect('/login')
 
 
 from app import routes, models, errors, forms, schema, api_routes
+from app import admin_panel
 
 if not models.User.query.filter_by(is_admin=True).all():
     user = models.User(username="admin", is_admin=True)
     user.set_password("admin")
     db.session.add(user)
     db.session.commit()
-
