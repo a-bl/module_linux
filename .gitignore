@@ -1,0 +1,10 @@
+telegram_bot/.idea/
+/telegram_bot/venv/
+/.idea
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+/telegram_bot/Pipfile
+/telegram_bot/Pipfile.lock
+/telegram_bot/constants.py
+

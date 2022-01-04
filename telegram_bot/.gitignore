@@ -1,8 +1,0 @@
-.idea/
-/venv
-*/__pycache__/
-*/*/__pycache__/
-*/*/*/__pycache__/
-/Pipfile
-/Pipfile.lock
-/constants.py
