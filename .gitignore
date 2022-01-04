@@ -1,9 +1,0 @@
-.idea/*
-flask_app/logs
-*/.idea/*
-flask_app/venv
-flask_app/app.db
-*/__pycache__/
-*/*/__pycache__/
-*/*/*/__pycache__/
-flask_app/old_migrations
