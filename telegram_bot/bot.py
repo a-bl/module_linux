@@ -17,6 +17,7 @@ bot.
 
 import logging
 import responses as resp
+import constants as keys
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, InlineQueryHandler
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
@@ -87,7 +88,7 @@ def main():
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
-    updater = Updater(token="5049993571:AAGy5pmpdxx-c9bXRyEkbhfnGeoJLGuHIbA", use_context=True)
+    updater = Updater(token=keys.API_KEY, use_context=True)
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
