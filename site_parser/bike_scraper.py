@@ -49,14 +49,14 @@ while params['page'] <= pages:
         to_json.append(item_to_json)
     params['page'] += 1
 
-# df = pd.DataFrame({
-#     'Name': itemsName,
-#     'Price': itemsPrice,
-#     'Location': itemsLocation,
-#     'Frame Size': itemsFrameSize,
-#     'Condition': itemsCondition
-# })
-# df.to_csv('bikes.csv', index=False)
+df = pd.DataFrame({
+    'Name': itemsName,
+    'Price': itemsPrice,
+    'Location': itemsLocation,
+    'Frame Size': itemsFrameSize,
+    'Condition': itemsCondition
+})
+df.to_csv('bikes.csv', index=False)
 
 with open('bikes.json', 'w') as f:
     f.write(json.dumps(to_json, indent=4))
