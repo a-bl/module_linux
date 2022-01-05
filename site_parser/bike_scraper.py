@@ -6,7 +6,7 @@ url = 'https://bikefair.org/listings?location%5B0%5D=51.33684119999999&location%
 params = {'page': 1}
 # set a number greater than the number of the first page to start the cycle
 pages = 48
-n = 1
+n = 0
 
 while params['page'] <= pages:
     response = requests.get(url, params=params)
@@ -18,7 +18,12 @@ while params['page'] <= pages:
         # itemName = i.find('h3', class_='font-bold line-clamp-2 h-12 px-2').text.strip()
         itemName = i.find('h3', class_='font-bold line-clamp-2 h-12 px-2').text.split(",")[0]
         itemPrice = i.find('div', class_='font-bold text-base').text.strip()
+        itemLocation = i.find_all('div', class_='text-gray-800')[0].text.strip()
+        itemFrameSize = i.find_all('div', class_='text-gray-800')[1].text.split()
+        itemFrameSize = ' '.join(itemFrameSize)
+        itemCondition = i.find('div', class_='ml-4 truncate').text.strip()
         # print(f"{n}: {itemPrice}")
-        print(f'{n}: {itemName} for {itemPrice}')
+        print(f'{n}: {itemName},\n     Price: {itemPrice},\n     Location: {itemLocation},\n     '
+              f'Frame size: {itemFrameSize},\n     Condition: {itemCondition}')
 
     params['page'] += 1
