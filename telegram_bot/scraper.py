@@ -18,6 +18,7 @@ itemsTransmission = []
 itemsFuel = []
 itemsEngineCapacity = []
 itemsMileage = []
+itemsLink = []
 
 
 to_json = []
@@ -47,6 +48,9 @@ while params['page'] <= pages:
         itemsEngineCapacity.append(itemEngineCapacity)
         itemMileage = i.find('li', class_='item-char js-race').text
         itemsMileage.append(itemMileage)
+        itemLink = i.find('a', class_='m-link-ticket').get('href')
+        itemsLink.append(itemLink)
+
         print(f'{n}: {itemBrand},\n     Model: {itemModel},\n     Price: {itemPrice} $,\n     Year: {itemYear},\n     '
               f'Region: {itemRegion},\n     Transmission: {itemTransmission},\n     Fuel type: {itemFuel},\n     '
               f'Engine capacity: {itemEngineCapacity},\n     Mileage: {itemMileage}')
@@ -59,12 +63,14 @@ while params['page'] <= pages:
             'Transmission': itemTransmission,
             'Fuel type': itemFuel,
             'Engine capacity': itemEngineCapacity,
-            'Mileage': itemMileage
+            'Mileage': itemMileage,
+            'Link': itemLink
         }
         to_json.append(item_to_json)
 
-    # last_page_num = int(soup.find_all('span', class_='page-item dhide text-c')[-1].text.split('/ ')[1].replace(' ', ''))
-    last_page_num = 10
+    # last_page_num = int(soup.find('a', class_='page-link js-next').get('data-page'))
+    # print(last_page_num)
+    last_page_num = 200
     pages = last_page_num if pages < last_page_num else pages
     params['page'] += 1
 # print(len(itemsBrand), len(itemsModel), len(itemsPrice), len(itemsYear), len(itemsRegion), len(itemsTransmission),
@@ -78,7 +84,8 @@ df = pd.DataFrame({
     'Transmission': itemsTransmission,
     'Fuel type': itemsFuel,
     'Engine capacity': itemsEngineCapacity,
-    'Mileage': itemsMileage
+    'Mileage': itemsMileage,
+    'Link': itemsLink
 })
 df.to_csv('autos.csv', index=False)
 
