@@ -16,12 +16,17 @@ bot.
 """
 
 import logging
+
+import pandas as pd
+
 import responses as resp
 import config as keys
 import keyboards as kb
 
+
 # from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, InlineQueryHandler
 # from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
+import random
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
@@ -36,48 +41,13 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-
-# Define a few command handlers. These usually take the two arguments update and
-# context. Error handlers also receive the raised TelegramError object in error.
-# def caps_command(update: Update, context: CallbackContext):
-#     text_caps = ' '.join(context.args).upper()
-#     context.bot.send_message(chat_id=update.effective_chat.id, text=text_caps)
-#
-#
-# def inline_caps(update: Update, context: CallbackContext):
-#     query = update.inline_query.query
-#     if not query:
-#         return
-#     results = []
-#     results.append(
-#         InlineQueryResultArticle(
-#             id=query.upper(),
-#             title='Caps',
-#             input_message_content=InputTextMessageContent(query.upper())
-#         )
-#     )
-#     context.bot.answer_inline_query(update.inline_query.id, results)
-#
-#
-# def unknown_command(update: Update, context: CallbackContext):
-#     context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, I didn't understand that command.")
-#
-#
 # def error(update: Update, context: CallbackContext):
 #     """Log Errors caused by Updates."""
 #     logger.warning(f'Update {update} caused error {context.error}')
-#
-#
-# def handle_message(update: Update, context: CallbackContext):
-#     text = str(update.message.text).lower()
-#     response = resp.sample_responses(text)
-#     update.message.reply_text(response)
-#
-#
-# def getBikes(text):
-#     url = 'https://bikefair.org/listings?currency=EUR&cash_payments=false&country_code=&delivery_distance=10&price%5B0%5D=29&price%5B1%5D=6119&frame_size%5B0%5D=481&frame_size%5B1%5D=549&wheel_size%5B0%5D=534&wheel_size%5B1%5D=548&height=&bike_brand%5B0%5D=80&page=1&sort%5Bkey%5D=best_match&sort%5Bdirection%5D=asc'
+
 
 def main():
+    db = pd.read_csv('autos.csv')
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
@@ -159,28 +129,61 @@ def main():
     async def process_help_command(message: types.Message):
         await message.reply("Write me something and I will send this text back to you!")
 
-    # # on noncommand i.e message - echo the message on Telegram
-    # @dp.message_handler()
-    # async def echo_message(msg: types.Message):
-    #     await bot.send_message(msg.from_user.id, msg.text)
+    #####
+    @dp.message_handler(commands="brand")
+    async def start(message: types.Message):
+        keyboard_brand = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        keyboard_brand.add(*db['Brand'].unique())
+        await message.answer('Loading...', reply_markup=types.ReplyKeyboardRemove())
+        await message.answer('Choose your brand', reply_markup=keyboard_brand)
 
-    # on noncommand message - reply the message
-    # reply_handler = MessageHandler(Filters.text, handle_message)
-    # dispatcher.add_handler(reply_handler)
-    #
-    # # reply text in CAPS
-    # caps_handler = CommandHandler('caps', caps_command)
-    # inline_caps_handler = InlineQueryHandler(inline_caps)
-    #
-    # dispatcher.add_handler(caps_handler)
-    # dispatcher.add_handler(inline_caps_handler)
-    #
+    @dp.message_handler()
+    async def get_brand_data(message: types.Message):
+        if message.text in db['Brand'].unique():
+            # area_universities = get_area_universities(message.text)
+            item_brand = db[db['Brand'] == message.text]
+            links = [str(link) for link in item_brand['Link']]
+            # await message.answer('Do you wand to choose model?', reply_markup=kb.kb_yes_no)
+            for l in random.choices(links, k=5):
+                await message.answer(l, reply_markup=types.ReplyKeyboardRemove())
+
+    @dp.message_handler(commands="model")
+    async def start_model(message: types.Message):
+        keyboard_model = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        keyboard_model.add(*db['Model'].unique())
+        await message.answer('Loading...', reply_markup=types.ReplyKeyboardRemove())
+        await message.answer('Choose your model', reply_markup=keyboard_model)
+
+    @dp.message_handler()
+    async def get_model_data(message: types.Message):
+        if message.text in db['Model'].unique():
+            # area_universities = get_area_universities(message.text)
+            item_brand = db[db['Model'] == message.text]
+            links = [str(link) for link in item_brand['Link']]
+            # await message.answer('Do you wand to choose model?', reply_markup=kb.kb_yes_no)
+            for l in random.choices(links, k=5):
+                await message.answer(l, reply_markup=types.ReplyKeyboardRemove())
+
+    @dp.message_handler(commands="year")
+    async def start_model(message: types.Message):
+        keyboard_model = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        keyboard_model.add(*db['Year'].unique())
+        await message.answer('Loading...', reply_markup=types.ReplyKeyboardRemove())
+        await message.answer('Choose year', reply_markup=keyboard_model)
+
+    @dp.message_handler()
+    async def get_model_data(message: types.Message):
+        if message.text in db['Year'].unique():
+            # area_universities = get_area_universities(message.text)
+            item_brand = db[db['Year'] == message.text]
+            links = [str(link) for link in item_brand['Link']]
+            # await message.answer('Do you wand to choose model?', reply_markup=kb.kb_yes_no)
+            for l in random.choices(links, k=5):
+                await message.answer(l, reply_markup=types.ReplyKeyboardRemove())
+    #########
+
     # # log all errors
     # dispatcher.add_error_handler(error)
-    #
-    # # command filter  to reply to all commands that were not recognized by the previous handlers
-    # unknown_handler = MessageHandler(Filters.command, unknown_command)
-    # dispatcher.add_handler(unknown_handler)
 
     # Start the Bot
     executor.start_polling(dp)
