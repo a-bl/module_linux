@@ -23,13 +23,15 @@ import responses as resp
 import config as keys
 import keyboards as kb
 
-
 # from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, InlineQueryHandler
 # from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
 import random
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
+from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters.state import State, StatesGroup
+from aiogram.utils.callback_data import CallbackData
 
 from bs4 import BeautifulSoup
 import requests
@@ -41,13 +43,21 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
+
 # def error(update: Update, context: CallbackContext):
 #     """Log Errors caused by Updates."""
 #     logger.warning(f'Update {update} caused error {context.error}')
 
 
+class Auto(StatesGroup):
+    waiting_for_brand = State()
+    waiting_for_model = State()
+
+
+dbs = []
 def main():
     db = pd.read_csv('autos.csv')
+    dbs = []
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
@@ -82,106 +92,91 @@ def main():
     # on different commands - answer in Telegram
     @dp.message_handler(commands=['start'])
     async def process_start_command(message: types.Message):
-        await message.reply("Hi!", reply_markup=kb.greet_kb)
-
-    @dp.message_handler(commands=['hi1'])
-    async def process_hi1_command(message: types.Message):
-        await message.reply("First - change the size of keyboard", reply_markup=kb.greet_kb1)
-
-    @dp.message_handler(commands=['hi2'])
-    async def process_hi2_command(message: types.Message):
-        await message.reply("Second - hide the keyboard after one press", reply_markup=kb.greet_kb2)
-
-    @dp.message_handler(commands=['hi3'])
-    async def process_hi3_command(message: types.Message):
-        await message.reply("Third - add more buttons", reply_markup=kb.markup3)
-
-    @dp.message_handler(commands=['hi4'])
-    async def process_hi4_command(message: types.Message):
-        await message.reply("Fourth - arrange the buttons in a row", reply_markup=kb.markup4)
-
-    @dp.message_handler(commands=['hi5'])
-    async def process_hi5_command(message: types.Message):
-        await message.reply("Fifth - add rows of buttons", reply_markup=kb.markup5)
-
-    @dp.message_handler(commands=['hi6'])
-    async def process_hi6_command(message: types.Message):
-        await message.reply("Sixth - request contact and geolocation\nThese two buttons are independent of each other.",
-                            reply_markup=kb.markup_request)
-
-    @dp.message_handler(commands=['hi7'])
-    async def process_hi7_command(message: types.Message):
-        await message.reply("Seventh - all methods together", reply_markup=kb.markup_big)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+        srch = types.KeyboardButton('/search')
+        markup.add(srch)
+        await bot.send_message(message.chat.id, 'Привет! Я бот для поиска авто на auto.ria.com\nЧтобы создать запрос '
+                                                'нажми на кнопку поиска', reply_markup=markup)
 
     @dp.message_handler(commands=['rm'])
     async def process_rm_command(message: types.Message):
         await message.reply("Removing message templates", reply_markup=kb.ReplyKeyboardRemove())
-
-    @dp.message_handler(commands=['1'])
-    async def process_command_1(message: types.Message):
-        await message.reply("First inline button", reply_markup=kb.inline_kb1)
-
-    @dp.message_handler(commands=['2'])
-    async def process_command_2(message: types.Message):
-        await message.reply("Send all possible buttons", reply_markup=kb.inline_kb_full)
 
     @dp.message_handler(commands=['help'])
     async def process_help_command(message: types.Message):
         await message.reply("Write me something and I will send this text back to you!")
 
     #####
-    @dp.message_handler(commands="brand")
-    async def start(message: types.Message):
-        keyboard_brand = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        keyboard_brand.add(*db['Brand'].unique())
-        await message.answer('Loading...', reply_markup=types.ReplyKeyboardRemove())
-        await message.answer('Choose your brand', reply_markup=keyboard_brand)
+    @dp.message_handler(commands=['search'])
+    async def search(message: types.Message):
+        await bot.send_message(message.chat.id, 'Какая марка Вас интересует?')
+        brands = [
+            b.replace('-', '_').replace('ЗАЗ', 'ZAZ').replace('ВАЗ', 'VAZ').replace('ГАЗ', 'GAZ')
+            for b in db["Brand"].unique()
+        ]
+        brands = sorted(brands)
+        brands[0] = '/' + brands[0]
 
-    @dp.message_handler()
-    async def get_brand_data(message: types.Message):
-        if message.text in db['Brand'].unique():
-            # area_universities = get_area_universities(message.text)
-            item_brand = db[db['Brand'] == message.text]
-            links = [str(link) for link in item_brand['Link']]
-            # await message.answer('Do you wand to choose model?', reply_markup=kb.kb_yes_no)
-            for l in random.choices(links, k=5):
-                await message.answer(l, reply_markup=types.ReplyKeyboardRemove())
+        await message.answer(
+            '/'.join([f'{b}\n' for b in brands])
+        )
 
-    @dp.message_handler(commands="model")
-    async def start_model(message: types.Message):
-        keyboard_model = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        keyboard_model.add(*db['Model'].unique())
-        await message.answer('Loading...', reply_markup=types.ReplyKeyboardRemove())
-        await message.answer('Choose your model', reply_markup=keyboard_model)
+    @dp.message_handler(content_types=['text'])
+    async def models(message):
+        # if message.text == 'Поиск авто! 🚗':
+        #     await search(message)
+        if message.text[1::].replace('_', '-') in db['Brand'].unique():
+            brand = message.text[1::]
+            brand = brand.replace('_', '-')
+            print(brand)
 
-    @dp.message_handler()
-    async def get_model_data(message: types.Message):
-        if message.text in db['Model'].unique():
-            # area_universities = get_area_universities(message.text)
-            item_brand = db[db['Model'] == message.text]
-            links = [str(link) for link in item_brand['Link']]
-            # await message.answer('Do you wand to choose model?', reply_markup=kb.kb_yes_no)
-            for l in random.choices(links, k=5):
-                await message.answer(l, reply_markup=types.ReplyKeyboardRemove())
+            await bot.send_message(message.chat.id, "Какая модель Вас интересует?")
 
-    @dp.message_handler(commands="year")
-    async def start_model(message: types.Message):
-        keyboard_model = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        keyboard_model.add(*db['Year'].unique())
-        await message.answer('Loading...', reply_markup=types.ReplyKeyboardRemove())
-        await message.answer('Choose year', reply_markup=keyboard_model)
+            models = []
+            for model in db[db['Brand'] == brand]['Model'].values:
+                model = model.split()[0].replace("-", "_")
+                if model not in models:
+                    models.append(model)
+            models = sorted(models)
+            models[0] = '/' + models[0]
 
-    @dp.message_handler()
-    async def get_model_data(message: types.Message):
-        if message.text in db['Year'].unique():
-            # area_universities = get_area_universities(message.text)
-            item_brand = db[db['Year'] == message.text]
-            links = [str(link) for link in item_brand['Link']]
-            # await message.answer('Do you wand to choose model?', reply_markup=kb.kb_yes_no)
-            for l in random.choices(links, k=5):
-                await message.answer(l, reply_markup=types.ReplyKeyboardRemove())
+            await message.answer(
+                '/'.join([f'{m}\n' for m in models])
+            )
+
+        elif message.text[1::].replace('_', '-') in db['Model'].str.split(' ', 1, expand=True)[0].values:
+            model = message.text[1::]
+            model = model.replace('_', '-')
+            print(model)
+            dbs.append(db[db['Model'].str.split(' ', 1, expand=True)[0].values == model])
+
+            await bot.send_message(message.chat.id, 'Какой год выпуска Вас интересует?')
+
+            years = []
+            for year in db[db['Model'].str.split(' ', 1, expand=True)[0].values == model]['Year'].values:
+                if year not in years:
+                    years.append(year)
+            years = sorted(years)
+            years[0] = '/' + years[0].astype(str)
+
+            await message.answer(
+                '/'.join([f'{str(years[i])}\n' for i in range(0, len(years))])
+            )
+
+        elif int(message.text[1::]) in db['Year'].values:
+            year = int(message.text[1::])
+            print(year)
+
+            await bot.send_message(message.chat.id, 'Предложения по вашему запросу')
+            dbs.append(dbs[0][db['Year'] == year]['Link'])
+            for link in dbs[0][db['Year'] == year]['Link']:
+
+                await bot.send_message(message.chat.id, f'{link}')
+
+            dbs.clear()
+
+
     #########
-
     # # log all errors
     # dispatcher.add_error_handler(error)
 
