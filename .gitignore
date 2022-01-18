@@ -11,4 +11,5 @@ main.py
 telegram_bot/botuploads.db
 site_parser/.idea/
 telegram_bot/keyboards.py
+site_parser/*
 
