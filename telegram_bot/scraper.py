@@ -2,6 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import json
+from sqlalchemy import create_engine
+
+engine = create_engine('postgresql://postgres_user:postgres_password@localhost:5432/telegram_bot_db')
 
 url = 'https://auto.ria.com/uk/legkovie/'
 params = {'page': 1}
@@ -55,39 +58,40 @@ while params['page'] <= pages:
               f'Region: {itemRegion},\n     Transmission: {itemTransmission},\n     Fuel type: {itemFuel},\n     '
               f'Engine capacity: {itemEngineCapacity},\n     Mileage: {itemMileage}')
         item_to_json = {
-            'Brand': itemBrand,
-            'Model': itemModel,
-            'Price': itemPrice,
-            'Year': itemYear,
-            'Region': itemRegion,
-            'Transmission': itemTransmission,
-            'Fuel type': itemFuel,
-            'Engine capacity': itemEngineCapacity,
-            'Mileage': itemMileage,
-            'Link': itemLink
+            'brand': itemBrand,
+            'model': itemModel,
+            'price': itemPrice,
+            'year': itemYear,
+            'region': itemRegion,
+            'transmission': itemTransmission,
+            'fuel type': itemFuel,
+            'engine capacity': itemEngineCapacity,
+            'mileage': itemMileage,
+            'link': itemLink
         }
         to_json.append(item_to_json)
 
-    # last_page_num = int(soup.find('a', class_='page-link js-next').get('data-page'))
+    last_page_num = int(soup.find('a', class_='page-link js-next').get('data-page'))
     # print(last_page_num)
-    last_page_num = 200
+    # last_page_num = 400
     pages = last_page_num if pages < last_page_num else pages
     params['page'] += 1
 # print(len(itemsBrand), len(itemsModel), len(itemsPrice), len(itemsYear), len(itemsRegion), len(itemsTransmission),
 #       len(itemsFuel), len(itemsEngineCapacity), len(itemsMileage))
 df = pd.DataFrame({
-    'Brand': itemsBrand,
-    'Model': itemsModel,
-    'Price': itemsPrice,
-    'Year': itemsYear,
-    'Region': itemsRegion,
-    'Transmission': itemsTransmission,
-    'Fuel type': itemsFuel,
-    'Engine capacity': itemsEngineCapacity,
-    'Mileage': itemsMileage,
-    'Link': itemsLink
+    'brand': itemsBrand,
+    'model': itemsModel,
+    'price': itemsPrice,
+    'year': itemsYear,
+    'region': itemsRegion,
+    'transmission': itemsTransmission,
+    'fuel type': itemsFuel,
+    'engine capacity': itemsEngineCapacity,
+    'mileage': itemsMileage,
+    'link': itemsLink
 })
 df.to_csv('autos.csv', index=False)
+df.to_sql('telegram_bot_db', engine, if_exists='replace', index=False)
 
 with open('autos.json', 'w') as f:
     f.write(json.dumps(to_json, indent=4))

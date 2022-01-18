@@ -6,5 +6,9 @@ telegram_bot/.idea/
 */*/*/__pycache__/
 /telegram_bot/Pipfile
 /telegram_bot/Pipfile.lock
-/telegram_bot/constants.py
+/telegram_bot/config.py
+main.py
+telegram_bot/botuploads.db
+site_parser/.idea/
+telegram_bot/keyboards.py
 
