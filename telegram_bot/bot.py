@@ -54,7 +54,7 @@ class Auto(StatesGroup):
     waiting_for_model = State()
 
 
-dbs = []
+
 def main():
     db = pd.read_csv('autos.csv')
     dbs = []
@@ -104,7 +104,7 @@ def main():
 
     @dp.message_handler(commands=['help'])
     async def process_help_command(message: types.Message):
-        await message.reply("Write me something and I will send this text back to you!")
+        await message.reply("Для поиска авто воспользуйся командой /search!")
 
     #####
     @dp.message_handler(commands=['search'])
@@ -123,8 +123,6 @@ def main():
 
     @dp.message_handler(content_types=['text'])
     async def models(message):
-        # if message.text == 'Поиск авто! 🚗':
-        #     await search(message)
         if message.text[1::].replace('_', '-') in db['Brand'].unique():
             brand = message.text[1::]
             brand = brand.replace('_', '-')
@@ -148,6 +146,7 @@ def main():
             model = message.text[1::]
             model = model.replace('_', '-')
             print(model)
+            dbs.clear()
             dbs.append(db[db['Model'].str.split(' ', 1, expand=True)[0].values == model])
 
             await bot.send_message(message.chat.id, 'Какой год выпуска Вас интересует?')
@@ -166,15 +165,67 @@ def main():
         elif int(message.text[1::]) in db['Year'].values:
             year = int(message.text[1::])
             print(year)
-
-            await bot.send_message(message.chat.id, 'Предложения по вашему запросу')
             dbs.append(dbs[0][db['Year'] == year]['Link'])
-            for link in dbs[0][db['Year'] == year]['Link']:
+            print(len(dbs[1]))
+            await bot.send_message(message.chat.id, 'Предложения по вашему запросу')
+            #
+            # for link in links:
+            #
+            #     await bot.send_message(message.chat.id, f'{link}')
 
-                await bot.send_message(message.chat.id, f'{link}')
+            await links_index(message)
 
-            dbs.clear()
+    links_callback = CallbackData("links", "page")
 
+    def get_links_keyboard(page: int = 0) -> types.InlineKeyboardMarkup:
+        keyboard = types.InlineKeyboardMarkup(row_width=1)
+        has_next_page = len(dbs[1]) > page + 1
+
+        if page != 0:
+            keyboard.add(
+                types.InlineKeyboardButton(
+                    text="< Назад",
+                    callback_data=links_callback.new(page=page - 1)
+                )
+            )
+
+        keyboard.add(
+            types.InlineKeyboardButton(
+                text=f"• {page + 1}",
+                callback_data="dont_click_me"
+            )
+        )
+
+        if has_next_page:
+            keyboard.add(
+                types.InlineKeyboardButton(
+                    text="Вперёд >",
+                    callback_data=links_callback.new(page=page + 1)
+                )
+            )
+
+        return keyboard
+
+    @dp.message_handler(commands=["links"])
+    async def links_index(message: types.Message):
+
+        link_data = dbs[1].values[0]
+        keyboard = get_links_keyboard()  # Page: 0
+
+        await bot.send_message(
+            chat_id=message.chat.id,
+            text=f'{link_data}',
+            reply_markup=keyboard
+        )
+
+    @dp.callback_query_handler(links_callback.filter())
+    async def link_page_handler(query: types.CallbackQuery, callback_data: dict):
+        page = int(callback_data.get("page"))
+
+        link_data = dbs[1].values[page]
+        keyboard = get_links_keyboard(page)
+
+        await query.message.edit_text(text=f'{link_data}', reply_markup=keyboard)
 
     #########
     # # log all errors
