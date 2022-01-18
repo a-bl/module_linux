@@ -1,4 +1,5 @@
 import logging
+import random
 
 import pandas as pd
 
@@ -20,6 +21,8 @@ logger = logging.getLogger(__name__)
 # def error(update: Update, context: CallbackContext):
 #     """Log Errors caused by Updates."""
 #     logger.warning(f'Update {update} caused error {context.error}')
+
+queries = {}
 
 
 def main():
@@ -52,7 +55,33 @@ def main():
     async def process_help_command(message: types.Message):
         await message.reply("Для поиска авто воспользуйся командой /search!")
 
-    #####
+    @dp.message_handler(commands=['save'])
+    async def save(message: types.Message):
+        await bot.send_message(message.chat.id, 'Вы сохранили свой запрос!')
+
+        await subscribe(message)
+
+    async def subscribe(message: types.Message):
+        qrs = pd.read_csv('queries.csv')
+        bs = []
+        ms = []
+        ys = []
+        links = []
+        for b in qrs['brand'].values:
+           if b not in bs:
+               bs.append(b)
+        for m in qrs['model'].values:
+            if m not in ms:
+                ms.append(m)
+        for y in qrs['year'].values:
+            if y not in ys:
+                ys.append(y)
+        for l in qrs['links'].values:
+            if l not in links:
+                links.append(l)
+
+        await bot.send_message(message.chat.id, f'{random.choice(links)}')
+
     @dp.message_handler(commands=['search'])
     async def search(message: types.Message):
         conn = psycopg2.connect(dbname="telegram_bot_db",
@@ -102,6 +131,8 @@ def main():
             brand = message.text[1::]
             brand = brand.replace('_', '-')
             print(brand)
+            queries['user'] = message.from_user.id
+            queries['brand'] = brand
 
             await bot.send_message(message.chat.id, "Какая модель Вас интересует?")
 
@@ -134,6 +165,7 @@ def main():
             model = message.text[1::]
             model = model.replace('_', '-')
             print(model)
+            queries['model'] = model
             dbs.clear()
             dbs.append(db[db['model'].str.split(' ', 1, expand=True)[0].values == model])
             # dbs.append(models)
@@ -169,7 +201,7 @@ def main():
         # elif int(message.text[1::]) in years:
             year = int(message.text[1::])
             print(year)
-
+            queries['year'] = year
             # conn = psycopg2.connect(dbname="telegram_bot_db",
             #                         user="postgres_user",
             #                         password="postgres_password",
@@ -184,6 +216,7 @@ def main():
             #         auto_links.append(link[0])
 
             dbs.append(dbs[0][db['year'] == year]['link'])
+            queries['links'] = dbs[1].values
             # dbs.append(auto_links)
             print(len(dbs[1]), 'links')
             await bot.send_message(message.chat.id, 'Предложения по вашему запросу')
@@ -193,6 +226,20 @@ def main():
             #     await bot.send_message(message.chat.id, f'{link}')
 
             await links_index(message)
+            # queries_from = pd.read_csv('queries.csv')
+            queries_df = pd.DataFrame(data={'user': queries['user'], 'brand': queries['brand'], 'model': queries['model'],
+                                            'year': queries['year'], 'links': queries['links']})
+            # if queries_df['brand'].values not in queries_from['brand'].values and queries_df['model'].values not in queries_from['model'].values\
+            #         and queries_df['year'].values not in queries_from['year'].values:
+            queries_df.to_csv('queries.csv', index=False, mode='a', header=False)
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+            sv = types.KeyboardButton('/save')
+            srch = types.KeyboardButton('/search')
+            markup.add(sv, srch)
+            await bot.send_message(message.chat.id, 'Если Вы хотите сохранить Ваш запрос и в дальнейшем получать '
+                                                    'рассылку - нажмите кнопку сохранения.\nЕсли Вы хотите продолжить'
+                                                    'поиск - нажмите кнопку поиска.', reply_markup=markup)
+
 
     links_callback = CallbackData("links", "page")
 
