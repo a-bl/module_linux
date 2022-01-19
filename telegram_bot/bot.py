@@ -6,11 +6,14 @@ import pandas as pd
 import config as keys
 import psycopg2
 
+import requests
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from aiogram.utils.callback_data import CallbackData
 
+# API_KEY = 'f8421dbccc918c922477af1e26443277c05a38f0'
+# api_link_ria = 'https://developers.ria.com/auto/search?api_key=' + API_KEY + "&category_id=1"
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -79,7 +82,37 @@ def main():
         for l in qrs['links'].values:
             if l not in links:
                 links.append(l)
-
+        # for j in range(0, len(bs)):
+        #     brands_api = 'https://developers.ria.com/auto/categories/1/marks?api_key=' + API_KEY
+        #     brands_list = requests.get(brands_api).json()
+        #     for i in range(len(brands_list)):
+        #         print(brands_list)
+        #         print(bs[j])
+        #         if brands_list[i]['name'] == bs[j]:
+        #             brand_id = brands_list[i]['value']
+        #             models_api = 'https://developers.ria.com/auto/categories/1/marks/' + str(
+        #                 brand_id) + '/models?api_key=' + API_KEY
+        #             models_list = requests.get(models_api).json()
+        #             for k in range(len(models_list)):
+        #                 if models_list[k]['name'] == ms[j]:
+        #                     model_id = models_list[k]['value']
+        #                     model_search_api = api_link_ria + '&marka_id=' + str(brand_id) + "&model_id=" + str(
+        #                         model_id) + '&countpage=3' + '&page=1'
+        #                     model = requests.get(model_search_api).json()
+        #                     ads_id_list = model['result']['search_result']['ids']
+        #                     list_ads = []
+        #                     for l in range(len(ads_id_list)):
+        #                         car_api = 'https://developers.ria.com/auto/info?api_key=' + API_KEY + '&auto_id=' + \
+        #                                   ads_id_list[l]
+        #                         cars_id_list = requests.get(car_api).json()
+        #                         car_link = 'https://auto.ria.com/uk' + cars_id_list['linkToView']
+        #                         await bot.send_message(message.chat.id, f"{car_link}")
+        #                         list_ads.append(car_link)
+        #                     print(list_ads)
+        #                 else:
+        #                     i += 1
+        #         else:
+        #             i += 1
         await bot.send_message(message.chat.id, f'{random.choice(links)}')
 
     @dp.message_handler(commands=['search'])
@@ -98,7 +131,7 @@ def main():
                 auto_brands.append(brand[0])
         await bot.send_message(message.chat.id, 'Какая марка Вас интересует?')
         brands = [
-            b.replace('-', '_').replace('ЗАЗ', 'ZAZ').replace('ВАЗ', 'VAZ').replace('ГАЗ', 'GAZ')
+            b.replace('-', '_').replace('ЗАЗ', 'ZAZ').replace('ВАЗ', 'VAZ').replace('ГАЗ', 'GAZ').replace('Богдан', 'Bogdan').replace('УАЗ', 'YAZ')
             # for b in db["brand"].unique()
             for b in auto_brands
         ]
@@ -237,7 +270,7 @@ def main():
             srch = types.KeyboardButton('/search')
             markup.add(sv, srch)
             await bot.send_message(message.chat.id, 'Если Вы хотите сохранить Ваш запрос и в дальнейшем получать '
-                                                    'рассылку - нажмите кнопку сохранения.\nЕсли Вы хотите продолжить'
+                                                    'рассылку - нажмите кнопку сохранения.\nЕсли Вы хотите продолжить '
                                                     'поиск - нажмите кнопку поиска.', reply_markup=markup)
 
 
