@@ -12,4 +12,7 @@ telegram_bot/botuploads.db
 site_parser/.idea/
 telegram_bot/keyboards.py
 site_parser/*
+telegram_bot/autos.csv
+telegram_bot/autos.json
+telegram_bot/queries.csv
 
